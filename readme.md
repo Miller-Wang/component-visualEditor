@@ -86,7 +86,7 @@
 
 
 ## 训练流程
-- 1. 先将训练营的仓库代码仓库 `Fork` 到自己的码云账号下 `https://gitee.com/zhufengpeixun/zhufeng-vueDrops-2101`
+- 1. 先将训练营的仓库代码仓库 `Fork` 到自己的码云账号下 `https://gitee.com/zhufeng-training/zhufeng-vue-drops-2101`
 - 2. 将 Fork 后的仓库 Clone 到本地
 - 3. 在项目根目录下创建自己的项目并完成当天的任务，第1天是创建，后面就是添加代码了
 - 4. 把实践总结(学到了什么？收获了什么?遇到了什么问题?如何解决的?)写在当天目录的`学习总结.md`文件里
