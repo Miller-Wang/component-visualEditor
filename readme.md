@@ -1,15 +1,24 @@
 # 可视化拖拽组件训练营
 
+## 入营须知
+- 本训练营共计一周，从21年01月23日晚8点开始到21年01月30日晚8点结束 
+- 参加本训练营需要支付30学分(视情况而决定)
+- 第一部分由周六(23号)上午发布相关的文档视频，第二部分由下周一(25号)中午发布剩下的文档视频，届时全部发送完毕
+- 目前先讲解的内容版本是vue3版本，React版本后续会安排，请大家敬候佳音
+- 上交作业的时间是下周六(30号)晚八点，过时不候
+- 交作业的版本可以是vue版本或是react版本，不过还是建议大家多多挑战自己呀！
+- 上交作业的时候个人的话就按照正常的交作业的格式就好，小组的话，请把名字和学号写在一起
+- 完成作业的同学可以把表格的学分填好呀
+- 要参加的同学要填写表格`https://shimo.im/sheets/TWkG9PNmfo0yyMsI/MODOC`
+- 本次训练营学分是30分，可以单兵做战，完成作业返回45分，也可以结成两个人的学死党团队做战，如果两个人都完成，每个返回60分，如果有一个没有完成，则不返回学分。
+
 ## 训练营说明
 
-- 可视化拖拽实战训练营明天(本周六 2021/01/23)正式开始，时长为一周时间，下周日结束；
 - 内容视频介绍：[https://www.bilibili.com/video/BV1BK4y1W7Eu/](https://www.bilibili.com/video/BV1BK4y1W7Eu/)
 - Vue版本项目预览：[http://martsforever-pot.gitee.io/vue-visual-editor/](http://martsforever-pot.gitee.io/vue-visual-editor/)
 - React版本项目预览：[http://martsforever-pot.gitee.io/react-visual-editor/](http://martsforever-pot.gitee.io/react-visual-editor/)
-- 本次训练营学分是30分，可以单兵做战，完成作业返回45分，也可以结成两个人的学死党团队做战，如果两个人都完成，每个返回60分，如果有一个没有完成，则不返回学分。
-- 需要参加的请填写表格：[https://shimo.im/sheets/TWkG9PNmfo0yyMsI/MODOC/](https://shimo.im/sheets/TWkG9PNmfo0yyMsI/MODOC/)，填完后扫描表格中的二维码进正式群。
 
-## 流程说明
+## 训练目标
 
 - 训练内容以录制的视频为主，本次录制的视频为Vue版本。年后会提供React版本视频。
 - 视频分两次发布，第一次为周六早上，第二次为周日晚上或者周一早上；时长为一周时间，下周日结束的时候提交作业。
@@ -75,3 +84,18 @@
 - [Typescript Deep Dive](http://martsforever-snapshot.gitee.io/typescript-book-chinese/)：我在码云上同步过来的 `Typescript Deep Dive`一书的中文文档，不用翻墙访问很快；
 - [@vue/cli Vue官方脚手架](https://cli.vuejs.org/zh/)：官方推荐的用于创建Vue工程脚手架工具
 - [Vite](https://www.npmjs.com/package/vite)：尤雨溪大佬新出的，旨在替代webpack-dev的开发工具，本次的React版本就是用vite搭建的，在全引入antd的情况下可以秒速启动（第一次慢一点）并且自带React热更新的功能；Vue版本因为ElementPlus安装有问题，暂时无法使用；
+
+## 入营要求
+- 保证入营期间和老师保持通信联系，不许无故缺席失联
+- 每天有至少2个小时的独立学习时间
+- 保证入营期间积极参与讨论和整理学习成果或是想法
+
+
+## 训练流程
+- 1. 先将训练营的仓库代码仓库 `Fork` 到自己的码云账号下 `https://gitee.com/zhufengpeixun/zhufeng-vueDrops-2101`
+- 2. 将 Fork 后的仓库 Clone 到本地
+- 3. 在项目根目录下创建自己的项目并完成当天的任务，第1天是创建，后面就是添加代码了
+- 4. 把实践总结(学到了什么？收获了什么?遇到了什么问题?如何解决的?)写在当天目录的`学习总结.md`文件里
+- 4. 在本地仓库完成作业后，push 到自己的码云远程仓库中
+- 5. 最后将自己最后的commit链接地址添加到训练营仓库的当天issue中
+- 6. 完成后在微信群中打卡，并`@`助教加学分如果不会操作的可以看操作视频  https://img.zhufengpeixun.com/submitwork.mp4
