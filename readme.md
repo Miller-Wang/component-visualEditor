@@ -9,7 +9,7 @@
 - 交作业的版本可以是vue版本或是react版本，不过还是建议大家多多挑战自己呀！
 - 上交作业的时候个人的话就按照正常的交作业的格式就好，小组的话，请把名字和学号写在一起
 - 完成作业的同学可以把表格的学分填好呀
-- 要参加的同学要填写表格`https://shimo.im/sheets/TWkG9PNmfo0yyMsI/MODOC`
+- 要参加的同学要填写表格[https://shimo.im/sheets/TWkG9PNmfo0yyMsI/MODOC](https://shimo.im/sheets/TWkG9PNmfo0yyMsI/MODOC)
 - 本次训练营学分是30分，可以单兵做战，完成作业返回45分，也可以结成两个人的学死党团队做战，如果两个人都完成，每个返回60分，如果有一个没有完成，则不返回学分。
 
 ## 训练营说明
@@ -86,10 +86,10 @@
 
 
 ## 训练流程
-- 1. 先将训练营的仓库代码仓库 `Fork` 到自己的码云账号下 `https://gitee.com/zhufeng-training/zhufeng-vue-drops-2101`
+- 1. 先将训练营的仓库代码仓库 `Fork` 到自己的码云账号下 [https://gitee.com/zhufeng-training/zhufeng-vue-drops-2101](https://gitee.com/zhufeng-training/zhufeng-vue-drops-2101)
 - 2. 将 Fork 后的仓库 Clone 到本地
 - 3. 在项目根目录下创建自己的项目并完成当天的任务，第1天是创建，后面就是添加代码了
 - 4. 把实践总结(学到了什么？收获了什么?遇到了什么问题?如何解决的?)写在当天目录的`学习总结.md`文件里
 - 4. 在本地仓库完成作业后，push 到自己的码云远程仓库中
 - 5. 最后将自己最后的commit链接地址添加到训练营仓库的当天issue中
-- 6. 完成后在微信群中打卡，并`@`助教加学分如果不会操作的可以看操作视频  https://img.zhufengpeixun.com/submitwork.mp4
+- 6. 完成后在微信群中打卡，并`@`助教加学分如果不会操作的可以看操作视频  [https://img.zhufengpeixun.com/submitwork.mp4](https://img.zhufengpeixun.com/submitwork.mp4)
