@@ -2,6 +2,7 @@ export interface VisualEditorBlockData {
   top: number;
   left: number;
   componentKey: string;
+  adjustPosition: boolean; // 是否需要调整位置
 }
 
 export interface VisualEditorModelValue {

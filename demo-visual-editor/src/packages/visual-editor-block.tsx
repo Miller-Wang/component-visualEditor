@@ -1,4 +1,4 @@
-import { computed, defineComponent, PropType } from "vue";
+import { computed, defineComponent, onMounted, PropType, ref } from "vue";
 import {
   VisualEditorBlockData,
   VisualEditorConfig,
@@ -14,16 +14,28 @@ export const VisualEditorBlock = defineComponent({
     },
   },
   setup(props) {
+    const el = ref({} as HTMLDivElement);
     const styles = computed(() => ({
       top: `${props.block?.top}px`,
       left: `${props.block?.left}px`,
     }));
 
+    onMounted(() => {
+      // 放置block时，让组件居中，对准鼠标点
+      const block = props.block;
+      if (block?.adjustPosition) {
+        const { offsetWidth, offsetHeight } = el.value;
+        block.left -= offsetWidth / 2;
+        block.top -= offsetHeight / 2;
+        block.adjustPosition = false;
+      }
+    });
+
     return () => {
       const component = props.config?.componentMap[props.block!.componentKey];
       const Render = component?.render();
       return (
-        <div class="visual-editor-block" style={styles.value}>
+        <div class="visual-editor-block" style={styles.value} ref={el}>
           {Render}
         </div>
       );

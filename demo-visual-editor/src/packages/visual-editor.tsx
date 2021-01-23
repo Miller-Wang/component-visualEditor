@@ -63,6 +63,7 @@ export const VisualEditor = defineComponent({
             componentKey: component!.key,
             top: e.offsetY,
             left: e.offsetX,
+            adjustPosition: true,
           });
           console.log("x", e.offsetX);
           console.log("y", e.offsetY);
