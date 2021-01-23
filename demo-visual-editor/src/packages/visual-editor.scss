@@ -93,10 +93,9 @@ $primary: #409eff;
     padding-left: $menuSize;
     padding-right: $operatorSize;
     box-sizing: border-box;
-    background-color: rgba($color: white, $alpha: 0.5);
     height: 100%;
     position: relative;
-    z-index: -1;
+    // z-index: -1;
     .content {
       height: 100%;
       width: 100%;
