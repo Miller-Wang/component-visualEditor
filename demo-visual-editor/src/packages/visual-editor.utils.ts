@@ -1,6 +1,7 @@
 export interface VisualEditorBlockData {
   top: number;
   left: number;
+  componentKey: string;
 }
 
 export interface VisualEditorModelValue {

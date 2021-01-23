@@ -38,19 +38,29 @@ export const VisualEditor = defineComponent({
       let component = null as null | VisualEditorComponent;
 
       const containerHandler = {
+        /**
+         * 拖拽组件进入容器，设置鼠标可放置状态
+         */
         dragenter: (e: DragEvent) => {
           e.dataTransfer!.dropEffect = "move";
         },
         dragover: (e: DragEvent) => {
           e.preventDefault();
         },
+        /**
+         * 拖拽组件离开容器，设置鼠标禁用状态
+         */
         dragleave: (e: DragEvent) => {
           e.dataTransfer!.dropEffect = "none";
         },
+        /**
+         * 在容器中放置组件
+         */
         drop: (e: DragEvent) => {
           console.log("drop", component);
           const blocks = dataModel.value?.blocks || [];
           blocks.push({
+            componentKey: component!.key,
             top: e.offsetY,
             left: e.offsetX,
           });
@@ -126,7 +136,11 @@ export const VisualEditor = defineComponent({
               style={containerStyles.value}
             >
               {(dataModel.value?.blocks || []).map((block, index: number) => (
-                <VisualEditorBlock block={block} key={index} />
+                <VisualEditorBlock
+                  block={block}
+                  key={index}
+                  config={props.config}
+                />
               ))}
             </div>
           </div>
