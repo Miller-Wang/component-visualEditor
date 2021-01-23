@@ -41,7 +41,11 @@
     "parserOptions": {
       "ecmaVersion": 2020
     },
-    "rules": {}
+    "rules": {
+      "no-debugger":"off",
+      "no-unused-vars": "off",
+      "no-unused-expressions": "off"
+    }
   },
   "browserslist": [
     "> 1%",
