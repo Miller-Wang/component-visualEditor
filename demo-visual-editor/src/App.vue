@@ -1,8 +1,6 @@
 <template>
   <div class="app">
-    <h1>这是页面内容</h1>
-    <visual-editor v-if="false" />
-    {{ val }}
+    <visual-editor v-model="jsonData" />
   </div>
 </template>
 <script lang="ts">
@@ -15,7 +13,22 @@ export default defineComponent({
   components: { VisualEditor },
   data() {
     return {
-      val: "",
+      jsonData: {
+        container: {
+          height: 500,
+          width: 800,
+        },
+        blocks: [
+          {
+            top: 100,
+            left: 100,
+          },
+          {
+            top: 200,
+            left: 200,
+          },
+        ],
+      },
     };
   },
 });
