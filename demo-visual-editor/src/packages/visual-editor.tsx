@@ -34,57 +34,72 @@ export const VisualEditor = defineComponent({
 
     const containerRef = ref({} as HTMLElement);
 
-    const menuDragger = {
-      current: {
-        component: null as null | VisualEditorComponent,
-      },
-      dragstart: (e: DragEvent, component: VisualEditorComponent) => {
-        containerRef.value.addEventListener("dragenter", menuDragger.dragenter);
-        containerRef.value.addEventListener("dragover", menuDragger.dragover);
-        containerRef.value.addEventListener("dragleave", menuDragger.dragleave);
-        containerRef.value.addEventListener("drop", menuDragger.drop);
-        menuDragger.current.component = component;
-      },
-      dragenter: (e: DragEvent) => {
-        e.dataTransfer!.dropEffect = "move";
-      },
-      dragover: (e: DragEvent) => {
-        e.preventDefault();
-      },
-      dragleave: (e: DragEvent) => {
-        e.dataTransfer!.dropEffect = "none";
-      },
-      dragend: (e: DragEvent) => {
-        containerRef.value.removeEventListener(
-          "dragenter",
-          menuDragger.dragenter
-        );
-        containerRef.value.removeEventListener(
-          "dragover",
-          menuDragger.dragover
-        );
-        containerRef.value.removeEventListener(
-          "dragleave",
-          menuDragger.dragleave
-        );
-        containerRef.value.removeEventListener("drop", menuDragger.drop);
-        menuDragger.current.component = null;
-      },
-      drop: (e: DragEvent) => {
-        console.log("drop", menuDragger.current.component);
-        const blocks = dataModel.value?.blocks || [];
-        blocks.push({
-          top: e.offsetY,
-          left: e.offsetX,
-        });
-        console.log("x", e.offsetX);
-        console.log("y", e.offsetY);
-        dataModel.value = {
-          ...dataModel.value,
-          blocks,
-        } as VisualEditorModelValue;
-      },
-    };
+    const menuDragger = (() => {
+      let component = null as null | VisualEditorComponent;
+
+      const containerHandler = {
+        dragenter: (e: DragEvent) => {
+          e.dataTransfer!.dropEffect = "move";
+        },
+        dragover: (e: DragEvent) => {
+          e.preventDefault();
+        },
+        dragleave: (e: DragEvent) => {
+          e.dataTransfer!.dropEffect = "none";
+        },
+        drop: (e: DragEvent) => {
+          console.log("drop", component);
+          const blocks = dataModel.value?.blocks || [];
+          blocks.push({
+            top: e.offsetY,
+            left: e.offsetX,
+          });
+          console.log("x", e.offsetX);
+          console.log("y", e.offsetY);
+          dataModel.value = {
+            ...dataModel.value,
+            blocks,
+          } as VisualEditorModelValue;
+        },
+      };
+
+      const blockHandler = {
+        dragstart: (e: DragEvent, current: VisualEditorComponent) => {
+          containerRef.value.addEventListener(
+            "dragenter",
+            containerHandler.dragenter
+          );
+          containerRef.value.addEventListener(
+            "dragover",
+            containerHandler.dragover
+          );
+          containerRef.value.addEventListener(
+            "dragleave",
+            containerHandler.dragleave
+          );
+          containerRef.value.addEventListener("drop", containerHandler.drop);
+          component = current;
+        },
+        dragend: (e: DragEvent) => {
+          containerRef.value.removeEventListener(
+            "dragenter",
+            containerHandler.dragenter
+          );
+          containerRef.value.removeEventListener(
+            "dragover",
+            containerHandler.dragover
+          );
+          containerRef.value.removeEventListener(
+            "dragleave",
+            containerHandler.dragleave
+          );
+          containerRef.value.removeEventListener("drop", containerHandler.drop);
+          component = null;
+        },
+      };
+
+      return blockHandler;
+    })();
 
     return () => (
       <div class="visual-editor">
