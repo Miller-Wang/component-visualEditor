@@ -25,7 +25,8 @@ export function useCommander() {
   const registry = (command: Command) => {
     state.commands[command.name] = (...args) => {
       const { undo, redo } = command.execute(...args);
-      if (command.followQueue) {
+      if (command.followQueue !== false) {
+        debugger;
         state.queue.push({ undo, redo });
         state.current += 1;
       }
@@ -44,9 +45,11 @@ export function useCommander() {
           // 重新做一遍，要做的事情
           const { current } = state;
           if (current === -1) return;
-          const { undo } = state.queue[current];
-          !!undo && undo();
-          state.current -= 1;
+          const queueItem = state.queue[current];
+          if (queueItem) {
+            queueItem.undo && queueItem.undo();
+            state.current--;
+          }
         },
         undo: () => {
           // 将做的事情还原
@@ -62,11 +65,11 @@ export function useCommander() {
     execute: () => {
       return {
         redo: () => {
-          const { current } = state;
-          if (!state.queue[current]) return;
-          const { redo } = state.queue[current];
-          redo();
-          state.current += 1;
+          const queueItem = state.queue[state.current + 1];
+          if (queueItem) {
+            queueItem.redo();
+            state.current++;
+          }
         },
         undo: () => {
           console.log("undo");

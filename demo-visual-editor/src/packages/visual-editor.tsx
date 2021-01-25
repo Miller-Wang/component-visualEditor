@@ -62,6 +62,9 @@ export const VisualEditor = defineComponent({
         }
         blocks.forEach((block) => (block.focus = false));
       },
+      updateBlocks: (blocks: VisualEditorBlockData[]) => {
+        dataModel.value!.blocks = blocks;
+      },
     };
 
     // 处理菜单拖拽进容器
@@ -210,7 +213,11 @@ export const VisualEditor = defineComponent({
       };
     })();
 
-    const commander = useVisualCommand();
+    const commander = useVisualCommand({
+      dataModel,
+      focusData: focusData,
+      updateBlocks: methods.updateBlocks,
+    });
 
     const buttons = [
       {
@@ -250,7 +257,7 @@ export const VisualEditor = defineComponent({
         </div>
         <div class="head">
           {buttons.map((btn, index) => (
-            <div key={index} class="head-btn">
+            <div key={index} class="head-btn" onClick={btn.handler}>
               <i class={`iconfont ${btn.icon}`}></i>
               <span>{btn.label}</span>
             </div>
