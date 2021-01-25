@@ -1,5 +1,6 @@
 import { computed, defineComponent, PropType, ref } from "vue";
 import { useModel } from "./utils/useModel";
+import { useVisualCommand } from "./utils/visual.command";
 import { VisualEditorBlock } from "./visual-editor-block";
 import "./visual-editor.scss";
 import {
@@ -209,6 +210,29 @@ export const VisualEditor = defineComponent({
       };
     })();
 
+    const commander = useVisualCommand();
+
+    const buttons = [
+      {
+        label: "撤销",
+        icon: "icon-back",
+        handler: commander.undo,
+        tip: "ctrl+z",
+      },
+      {
+        label: "重做",
+        icon: "icon-forward",
+        handler: commander.redo,
+        tip: "ctrl+y, ctrl+shift+z",
+      },
+      {
+        label: "删除",
+        icon: "icon-delete",
+        handler: () => commander.delete(),
+        tip: "ctrl+d, backspance, delete,",
+      },
+    ];
+
     return () => (
       <div class="visual-editor">
         <div class="menu">
@@ -224,7 +248,14 @@ export const VisualEditor = defineComponent({
             </div>
           ))}
         </div>
-        <div class="head">head</div>
+        <div class="head">
+          {buttons.map((btn, index) => (
+            <div key={index} class="head-btn">
+              <i class={`iconfont ${btn.icon}`}></i>
+              <span>{btn.label}</span>
+            </div>
+          ))}
+        </div>
         <div class="operator">operator</div>
         <div class="body">
           <div class="content">
