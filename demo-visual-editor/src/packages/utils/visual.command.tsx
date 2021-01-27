@@ -66,39 +66,6 @@ export function useVisualCommand({
     },
   });
 
-  // commander.registry({
-  //   name: "add",
-  //   init: () => {
-  //     const before: VisualEditorBlockData[] = [];
-  //     const handler = {
-  //       dragstart: () => {
-  //         console.log("");
-  //       },
-  //       dragend: () => {
-  //         console.log("");
-  //       },
-  //     };
-
-  //     dragstart.on(handler.dragstart);
-  //     dragend.on(handler.dragend);
-
-  //     return () => {
-  //       dragstart.off(handler.dragstart);
-  //       dragend.off(handler.dragend);
-  //     };
-  //   },
-  //   execute: () => {
-  //     return {
-  //       undo: () => {
-  //         console.log("");
-  //       },
-  //       redo: () => {
-  //         console.log("");
-  //       },
-  //     };
-  //   },
-  // });
-
   /**
    * 拖拽命令
    * - 从菜单拖拽组件到容器画布；

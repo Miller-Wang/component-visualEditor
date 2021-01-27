@@ -204,14 +204,14 @@ export const VisualEditor = defineComponent({
       return {
         container: {
           onMousedown: (e: MouseEvent) => {
-            e.stopPropagation();
+            e.preventDefault();
             methods.clearFocus();
           },
         },
         block: {
           onMousedown: (e: MouseEvent, block: VisualEditorBlockData) => {
-            e.stopPropagation();
-            e.preventDefault();
+            e && e.stopPropagation();
+            e && e.preventDefault();
             // 只有元素未选中状态下， 才去处理
             if (!block.focus) {
               if (!e.shiftKey) {
@@ -273,10 +273,12 @@ export const VisualEditor = defineComponent({
         </div>
         <div class="head">
           {buttons.map((btn, index) => (
-            <div key={index} class="head-btn" onClick={btn.handler}>
-              <i class={`iconfont ${btn.icon}`}></i>
-              <span>{btn.label}</span>
-            </div>
+            <el-tooltip effect="dark" content={btn.tip} placement="bottom">
+              <div key={index} class="head-btn" onClick={btn.handler}>
+                <i class={`iconfont ${btn.icon}`}></i>
+                <span>{btn.label}</span>
+              </div>
+            </el-tooltip>
           ))}
         </div>
         <div class="operator">operator</div>
