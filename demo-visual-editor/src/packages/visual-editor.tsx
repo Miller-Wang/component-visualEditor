@@ -1,4 +1,5 @@
 import { computed, defineComponent, PropType, ref } from "vue";
+import { createEvent } from "./plugins/event";
 import { useModel } from "./utils/useModel";
 import { useVisualCommand } from "./utils/visual.command";
 import { VisualEditorBlock } from "./visual-editor-block";
@@ -50,6 +51,9 @@ export const VisualEditor = defineComponent({
         unfocus, // 此时未选中的数据
       };
     });
+
+    const dragstart = createEvent();
+    const dragend = createEvent();
 
     // 对外暴露的一些方法
     const methods = {
@@ -106,6 +110,8 @@ export const VisualEditor = defineComponent({
             ...dataModel.value,
             blocks,
           } as VisualEditorModelValue;
+          debugger;
+          dragend.emit();
         },
       };
 
@@ -125,6 +131,7 @@ export const VisualEditor = defineComponent({
           );
           containerRef.value.addEventListener("drop", containerHandler.drop);
           component = current;
+          dragstart.emit();
         },
         dragend: (e: DragEvent) => {
           containerRef.value.removeEventListener(
@@ -153,11 +160,16 @@ export const VisualEditor = defineComponent({
         startX: 0,
         startY: 0,
         startPos: [] as { left: number; top: number }[],
+        dragging: false,
       };
 
       const mousemove = (e: MouseEvent) => {
         const durX = e.clientX - dragState.startX;
         const durY = e.clientY - dragState.startY;
+        if (!dragState.dragging) {
+          dragState.dragging = true;
+          dragstart.emit();
+        }
         focusData.value.focus.forEach((block, i) => {
           block.top = dragState.startPos[i].top + durY;
           block.left = dragState.startPos[i].left + durX;
@@ -166,6 +178,9 @@ export const VisualEditor = defineComponent({
       const mouseup = (e: MouseEvent) => {
         document.removeEventListener("mousemove", mousemove);
         document.removeEventListener("mouseup", mouseup);
+        if (dragState.dragging) {
+          dragend.emit();
+        }
       };
 
       const mousedown = (e: MouseEvent) => {
@@ -176,6 +191,7 @@ export const VisualEditor = defineComponent({
             top,
             left,
           })),
+          dragging: false,
         };
         document.addEventListener("mousemove", mousemove);
         document.addEventListener("mouseup", mouseup);
@@ -212,11 +228,12 @@ export const VisualEditor = defineComponent({
         },
       };
     })();
-
     const commander = useVisualCommand({
-      dataModel,
       focusData: focusData,
       updateBlocks: methods.updateBlocks,
+      dataModel,
+      dragstart,
+      dragend,
     });
 
     const buttons = [
