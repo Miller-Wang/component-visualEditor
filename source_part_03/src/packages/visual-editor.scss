@@ -1,0 +1,195 @@
+@import "./lib/iconfont/iconfont.css";
+
+/*@formatter:off*/
+$headSize: 60px; // 顶部操作栏的高度
+$menuSize: 275px; // 菜单列表的宽度
+$operatorSize: 275px; // 右侧编辑详情的宽度
+
+$ibc: #dcdfe6; // border color边框颜色
+$ibl: #ebeef5; // border color light 边框颜色：轻
+$itc: #314659; // text color，字体颜色
+$icc: rgba(0, 0, 0, 0.45); // icon color，图标颜色
+$boxShadowColor: #f0f1f2; // 阴影的颜色
+
+$primary: #409EFF; // 主色调
+/*@formatter:on*/
+
+
+.visual-editor {
+  position: fixed;
+  top: 20px;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  background-color: white;
+
+  &:before {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(black, 0.1);
+    content: '';
+  }
+
+  & > .visual-editor-menu {
+    position: absolute;
+    width: $menuSize;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background-color: white;
+    z-index: 9;
+
+    .visual-editor-menu-item {
+      position: relative;
+      width: calc(100% - 20px);
+      margin-left: 10px;
+      border: solid 3px $ibl;
+      margin-top: 20px;
+      min-height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0px 20px;
+      box-sizing: border-box;
+
+      &:after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        content: '';
+        z-index: 2;
+      }
+
+      &:hover {
+        border-color: $primary;
+        cursor: move;
+      }
+    }
+
+    .visual-editor-menu-item-label {
+      position: absolute;
+      top: -3px;
+      left: -3px;
+      background-color: $primary;
+      color: white;
+      padding: 4px 8px;
+      font-size: 12px;
+      z-index: 1;
+    }
+
+  }
+
+  & > .visual-editor-head {
+    position: absolute;
+    top: 0;
+    left: $menuSize;
+    right: $operatorSize;
+    height: $headSize;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 10px;
+    z-index: 2;
+
+    .visual-editor-head-button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(black, 0.3);
+      color: white;
+      height: 60px;
+      width: 60px;
+      cursor: pointer;
+      transition: all 300ms linear;
+
+      & + .visual-editor-head-button {
+        margin-left: 1px;
+      }
+
+      &:first-child {
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+      }
+
+      &:last-child {
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+      }
+
+      &:hover {
+        background-color: white;
+        color: $primary;
+      }
+
+      i {
+        font-size: 20px;
+      }
+
+      span {
+        font-size: 12px;
+      }
+    }
+  }
+
+  & > .visual-editor-operator {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: $operatorSize;
+    background-color: white;
+    z-index: 9;
+  }
+
+  & > .visual-editor-body {
+    padding-top: $headSize + 20;
+    padding-left: $menuSize;
+    padding-right: $operatorSize;
+    box-sizing: border-box;
+    height: 100%;
+    background-color: rgba(white, 0.5);
+    position: relative;
+    z-index: 1;
+
+    & > .visual-editor-content {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      //overflow: scroll;
+
+      & > .visual-editor-container {
+        background-color: white;
+        flex-shrink: 0;
+        flex-grow: 0;
+        position: relative;
+
+        .visual-editor-block {
+          position: absolute;
+
+          &:after {
+            $space: 3px;
+            position: absolute;
+            top: -$space;
+            left: -$space;
+            right: -$space;
+            bottom: -$space;
+            content: '';
+          }
+
+          &.visual-editor-block-focus {
+            &:after {
+              border: dashed 1px $primary;
+            }
+          }
+        }
+      }
+    }
+  }
+}
