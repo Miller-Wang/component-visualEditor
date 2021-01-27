@@ -110,7 +110,6 @@ export const VisualEditor = defineComponent({
             ...dataModel.value,
             blocks,
           } as VisualEditorModelValue;
-          debugger;
           dragend.emit();
         },
       };

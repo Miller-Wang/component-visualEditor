@@ -81,7 +81,6 @@ export function useCommander() {
     execute: () => {
       return {
         redo: () => {
-          debugger;
           if (state.current === -1) {
             return;
           }

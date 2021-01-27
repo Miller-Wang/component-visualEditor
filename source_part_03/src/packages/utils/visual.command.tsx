@@ -60,7 +60,6 @@ export function useVisualCommand({
   commander.registry({
     name: "drag",
     init() {
-      debugger;
       this.data = { before: null as null | VisualEditorBlockData[] };
       const handler = {
         dragstart: () =>

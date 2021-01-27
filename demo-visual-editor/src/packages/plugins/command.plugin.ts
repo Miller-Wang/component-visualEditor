@@ -64,7 +64,6 @@ export function useCommander() {
       console.log("监听到键盘事件");
     };
     window.addEventListener("keydown", onKeydown);
-    debugger;
     state.commandArray.forEach(
       (command) => !!command.init && state.destroyList.push(command.init())
     );
@@ -84,7 +83,6 @@ export function useCommander() {
       return {
         redo: () => {
           // 重新做一遍，要做的事情
-          debugger;
           const { current } = state;
           if (current === -1) return;
           const queueItem = state.queue[current];
