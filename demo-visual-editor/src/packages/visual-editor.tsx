@@ -254,6 +254,11 @@ export const VisualEditor = defineComponent({
         handler: () => commander.delete(),
         tip: "ctrl+d, backspance, delete,",
       },
+      {
+        label: "清空",
+        icon: "icon-reset",
+        handler: () => commander.clear(),
+      },
     ];
 
     return () => (
@@ -272,14 +277,20 @@ export const VisualEditor = defineComponent({
           ))}
         </div>
         <div class="head">
-          {buttons.map((btn, index) => (
-            <el-tooltip effect="dark" content={btn.tip} placement="bottom">
+          {buttons.map((btn, index) => {
+            const content = (
               <div key={index} class="head-btn" onClick={btn.handler}>
                 <i class={`iconfont ${btn.icon}`}></i>
                 <span>{btn.label}</span>
               </div>
-            </el-tooltip>
-          ))}
+            );
+            if (!btn.tip) return content;
+            return (
+              <el-tooltip effect="dark" content={btn.tip} placement="bottom">
+                {content}
+              </el-tooltip>
+            );
+          })}
         </div>
         <div class="operator">operator</div>
         <div class="body">
