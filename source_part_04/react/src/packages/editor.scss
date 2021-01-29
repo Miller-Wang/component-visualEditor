@@ -1,0 +1,403 @@
+@import "../lib/iconfont/iconfont.css";
+
+$headSize: 60px;
+$menuSize: 275px;
+$operatorSize: 275px;
+
+$ibc: #dcdfe6;
+$ibl: #ebeef5;
+$itc: #314659;
+$icc: rgba(0, 0, 0, 0.45);
+$boxShadowColor: #f0f1f2;
+
+$primary: #409EFF;
+
+.vue-visual-editor {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+  background-color: white;
+  z-index: 120;
+
+  &:before {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(black, 0.1);
+    content: '';
+  }
+
+  .vue-visual-head, .vue-visual-body, .vue-visual-menu, .vue-visual-operator {
+    position: absolute;
+
+
+    //自动移滚动条样式
+    &::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 1em;
+      background-color: rgba(black, 0.15);
+    }
+
+    &::-webkit-scrollbar-track {
+      border-radius: 1em;
+      background-color: transparent;
+    }
+
+    &.vue-visual-head {
+      top: 0;
+      left: $menuSize;
+      right: $operatorSize;
+      height: $headSize;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      ul {
+        margin: 0;
+        padding: 0;
+
+        li {
+          list-style: none;
+          width: 50px;
+          height: 50px;
+          display: inline-flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          background-color: rgba(black, 0.3);
+          user-select: none;
+          cursor: pointer;
+          transition: background-color linear 100ms;
+          line-height: normal;
+
+          &:first-child {
+            border-top-left-radius: 2px;
+            border-bottom-left-radius: 2px;
+          }
+
+          &:last-child {
+            border-top-right-radius: 2px;
+            border-bottom-right-radius: 2px;
+          }
+
+          & + li {
+            margin-left: 1px;
+          }
+
+          & > i {
+            color: white;
+            font-size: 20px;
+          }
+
+          & > span {
+            font-size: 12px;
+            color: white;
+          }
+
+          &:hover {
+            background-color: white;
+
+            i, span {
+              color: $primary;
+            }
+          }
+
+          &:active {
+            background-color: rgba($primary, 0.1);
+          }
+        }
+      }
+    }
+
+    &.vue-visual-menu {
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: $menuSize;
+      background-color: white;
+      border-right: solid 1px $ibc;
+      box-sizing: border-box;
+      overflow-x: hidden;
+      overflow-y: auto;
+      padding-bottom: 300px;
+      border-top-left-radius: 8px;
+      border-bottom-left-radius: 8px;
+
+      .vue-visual-menu-head {
+        color: $primary;
+        font-weight: bold;
+        height: $headSize;
+        display: flex;
+        align-items: center;
+        letter-spacing: 2px;
+        padding: 0 10px;
+
+        & > i {
+          font-size: 20px;
+        }
+
+        & > span {
+          font-size: 14px;
+        }
+      }
+
+      .vue-visual-component-preview-list {
+        margin: 0;
+        padding: 0;
+
+        li.vue-visual-component-item {
+          list-style: none;
+          display: inline-block;
+          border: 2px solid $ibl;
+          color: rgba(0, 0, 0, .85);
+          width: calc(100% - 20px);
+          margin-left: 10px;
+          position: relative;
+          box-sizing: border-box;
+          padding: 36px 12px 16px;
+          user-select: none;
+
+          &:after {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            cursor: move;
+            content: '';
+            z-index: 99;
+          }
+
+          & + .vue-visual-component-item {
+            margin-top: 28px;
+          }
+
+          & > div:first-child {
+            min-height: 30px;
+          }
+
+          .vue-visual-component-item-name {
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            font-size: 12px;
+            height: 24px;
+            line-height: 24px;
+            padding: 0 12px;
+            background-color: $primary;
+            color: white;
+            //border-bottom-right-radius: 8px;
+          }
+
+          &:active {
+            border-color: $primary;
+          }
+        }
+      }
+    }
+
+    &.vue-visual-operator {
+      top: 0;
+      bottom: 0;
+      right: 0;
+      width: $operatorSize;
+      background-color: white;
+      border-left: solid 1px $ibc;
+      box-sizing: border-box;
+      overflow-y: auto;
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+      padding: 20px 20px 300px;
+
+      & > div:first-child {
+        font-weight: bold;
+        font-size: 20px;
+        margin-bottom: 20px;
+      }
+
+      & > .el-form > .el-form-item > .el-form-item__label {
+        float: none;
+      }
+    }
+
+    &.vue-visual-body {
+      top: 0;
+      left: $menuSize;
+      right: $operatorSize;
+      bottom: 0;
+      box-sizing: border-box;
+      background-color: #f6f6f6;
+      display: flex;
+      justify-content: center;
+      overflow: auto;
+      padding: 20 + $headSize 0 200px 0;
+    }
+
+    .vue-visual-container {
+      box-shadow: 0 2px 8px $boxShadowColor;
+      background-color: white;
+    }
+  }
+
+  &:not(.vue-visual-editor-preview) {
+    .vue-visual-container {
+      user-select: none;
+
+      &:before {
+        $space: 2px;
+        position: absolute;
+        top: -$space;
+        left: -$space;
+        right: -$space;
+        bottom: -$space;
+        border: dashed 1px $primary;
+        content: '';
+      }
+    }
+
+    .vue-visual-block {
+      cursor: move;
+
+      & * {
+        pointer-events: none;
+      }
+    }
+  }
+}
+
+.vue-visual-container {
+  position: relative;
+  display: inline-block;
+
+  .vue-visual-x-mark {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    border-left: dashed 1px $primary;
+    z-index: 9999;
+  }
+
+  .vue-visual-y-mark {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    border-top: dashed 1px $primary;
+    z-index: 9999;
+  }
+
+  .vue-visual-container-edit-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: black;
+    padding: 6px 16px;
+    border: dashed 1px gray;
+    user-select: none;
+
+    &:hover {
+      background-color: $ibl;
+      cursor: pointer;
+      border-style: solid;
+    }
+
+    &:active {
+      background-color: $ibc;
+    }
+
+    & > i {
+      font-size: 16px;
+      margin-right: 4px;
+    }
+
+    & > span {
+      font-size: 14px;
+    }
+  }
+}
+
+.vue-visual-block {
+  position: absolute;
+  display: inline-block;
+
+  &.vue-visual-block-focus {
+    &:before {
+      position: absolute;
+      $space: 3px;
+      top: -$space;
+      left: -$space;
+      right: -$space;
+      bottom: -$space;
+      content: '';
+      border: dashed 1px $primary;
+    }
+  }
+}
+
+.visual-block-resize {
+  position: absolute;
+  $size: 6px;
+  $dur: $size + 1;
+  top: -$dur;
+  bottom: -$dur;
+  left: -$dur;
+  right: -$dur;
+  height: $size;
+  width: $size;
+  background-color: $primary;
+  cursor: pointer;
+  pointer-events: auto !important;
+
+  &.visual-block-resize-top {
+    left: calc(50% - #{$size / 2});
+    cursor: n-resize;
+  }
+
+  &.visual-block-resize-bottom {
+    left: calc(50% - #{$size / 2});
+    top: initial;
+    cursor: s-resize;
+  }
+
+  &.visual-block-resize-left {
+    top: calc(50% - #{$size / 2});
+    cursor: e-resize;
+  }
+
+  &.visual-block-resize-right {
+    top: calc(50% - #{$size / 2});
+    left: initial;
+    cursor: e-resize;
+  }
+
+  &.visual-block-resize-top-left {
+    cursor: nw-resize;
+  }
+
+  &.visual-block-resize-top-right {
+    left: initial;
+    cursor: ne-resize;
+  }
+
+  &.visual-block-resize-bottom-left {
+    top: initial;
+    cursor: sw-resize;
+  }
+
+  &.visual-block-resize-bottom-right {
+    left: initial;
+    top: initial;
+    cursor: se-resize;
+  }
+
+}
