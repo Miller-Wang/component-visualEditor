@@ -1,8 +1,10 @@
 import { computed, defineComponent, PropType, ref } from "vue";
 import { createEvent } from "./plugins/event";
+import { $$dialog } from "./utils/dialog-service";
 import { useModel } from "./utils/useModel";
 import { useVisualCommand } from "./utils/visual.command";
 import { VisualEditorBlock } from "./visual-editor-block";
+import { ElMessageBox } from "element-plus";
 import "./visual-editor.scss";
 import {
   createNewBlock,
@@ -235,6 +237,31 @@ export const VisualEditor = defineComponent({
       dragend,
     });
 
+    const handleImport = async () => {
+      console.log("handleImport");
+      const text = await $$dialog.textarea("", {
+        title: "请输入要导入的Json字符串",
+      });
+      console.log("text", text);
+      try {
+        const data = JSON.parse(text || "");
+        if (typeof data !== "object") {
+          throw new Error();
+        }
+        dataModel.value = data;
+      } catch (error) {
+        ElMessageBox.alert("解析json字符串出错");
+      }
+    };
+
+    const handleExport = async () => {
+      console.log("handleImport");
+      const text = await $$dialog.textarea(JSON.stringify(dataModel.value), {
+        title: "导出内容",
+      });
+      console.log("text", text);
+    };
+
     const buttons = [
       {
         label: "撤销",
@@ -248,6 +275,18 @@ export const VisualEditor = defineComponent({
         handler: commander.redo,
         tip: "ctrl+y, ctrl+shift+z",
       },
+      {
+        label: "导入",
+        icon: "icon-import",
+        handler: handleImport,
+      },
+
+      {
+        label: "导出",
+        icon: "icon-export",
+        handler: handleExport,
+      },
+
       {
         label: "删除",
         icon: "icon-delete",
