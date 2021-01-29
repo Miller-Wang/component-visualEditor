@@ -8,6 +8,7 @@ import { defineComponent } from "vue";
 import { VisualEditor } from "../src/packages/visual-editor";
 // import { TestUseModel } from "../src/packages/utils/useModel";
 import visualConfig from "./packages/visual.config";
+import jsonData from "./jsonData.json";
 
 export default defineComponent({
   name: "App",
@@ -15,7 +16,8 @@ export default defineComponent({
   data() {
     return {
       visualConfig,
-      jsonData: {
+      jsonData: jsonData,
+      jsonData2: {
         container: {
           height: 500,
           width: 800,

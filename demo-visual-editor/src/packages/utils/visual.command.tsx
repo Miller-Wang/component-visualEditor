@@ -126,6 +126,72 @@ export function useVisualCommand({
     },
   });
 
+  commander.registry({
+    name: "placeTop",
+    keyboard: "ctrl+up",
+    execute: () => {
+      const data = {
+        before: deepcopy(dataModel.value?.blocks),
+        after: deepcopy(
+          (() => {
+            debugger;
+            const { focus, unfocus } = focusData.value;
+            const maxZIndex = unfocus.reduce((prev, block) => {
+              return Math.max(prev, block.zIndex);
+            }, -Infinity);
+            focus.forEach((block) => (block.zIndex = maxZIndex + 1));
+            return deepcopy(dataModel.value?.blocks);
+          })()
+        ),
+      };
+      return {
+        redo: () => {
+          updateBlocks(deepcopy(data.after || []));
+        },
+        undo: () => {
+          updateBlocks(deepcopy(data.before || []));
+        },
+      };
+    },
+  });
+
+  commander.registry({
+    name: "placeBottom",
+    keyboard: "ctrl+down",
+    execute: () => {
+      const data = {
+        before: deepcopy(dataModel.value?.blocks),
+        after: deepcopy(
+          (() => {
+            const { focus, unfocus } = focusData.value;
+            let minZIndex = unfocus.reduce((prev, block) => {
+              return Math.min(prev, block.zIndex);
+            }, Infinity);
+
+            if (minZIndex <= 0) {
+              unfocus.forEach(
+                (block) =>
+                  (block.zIndex = 1 + block.zIndex + Math.abs(minZIndex))
+              );
+              minZIndex = 1;
+            }
+            debugger;
+            focus.forEach((block) => (block.zIndex = minZIndex - 1));
+            return deepcopy(dataModel.value?.blocks);
+          })()
+        ),
+      };
+      return {
+        redo: () => {
+          updateBlocks(deepcopy(data.after || []));
+        },
+        undo: () => {
+          updateBlocks(deepcopy(data.before || []));
+        },
+      };
+    },
+  });
+
   commander.init();
 
   return {
@@ -133,5 +199,7 @@ export function useVisualCommand({
     redo: () => commander.state.commands.redo(),
     delete: () => commander.state.commands.delete(),
     clear: () => commander.state.commands.clear(),
+    placeTop: () => commander.state.commands.placeTop(),
+    placeBottom: () => commander.state.commands.placeBottom(),
   };
 }

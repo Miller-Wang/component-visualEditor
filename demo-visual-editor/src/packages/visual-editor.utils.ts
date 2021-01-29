@@ -4,6 +4,7 @@ export interface VisualEditorBlockData {
   componentKey: string;
   adjustPosition: boolean; // 是否需要调整位置
   focus: boolean; // 是否是选中状态
+  zIndex: number; // z-index值
 }
 
 export interface VisualEditorModelValue {
@@ -32,6 +33,7 @@ export function createNewBlock(data: {
     left: data.left,
     adjustPosition: true,
     focus: false,
+    zIndex: 0,
   };
 }
 

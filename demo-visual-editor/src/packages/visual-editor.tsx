@@ -286,6 +286,16 @@ export const VisualEditor = defineComponent({
         icon: "icon-export",
         handler: handleExport,
       },
+      {
+        label: "置顶",
+        icon: "icon-place-top",
+        handler: () => commander.placeTop(),
+      },
+      {
+        label: "置低",
+        icon: "icon-place-bottom",
+        handler: () => commander.placeBottom(),
+      },
 
       {
         label: "删除",
