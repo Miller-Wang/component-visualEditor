@@ -134,7 +134,6 @@ export function useVisualCommand({
         before: deepcopy(dataModel.value?.blocks),
         after: deepcopy(
           (() => {
-            debugger;
             const { focus, unfocus } = focusData.value;
             const maxZIndex = unfocus.reduce((prev, block) => {
               return Math.max(prev, block.zIndex);
@@ -175,11 +174,36 @@ export function useVisualCommand({
               );
               minZIndex = 1;
             }
-            debugger;
             focus.forEach((block) => (block.zIndex = minZIndex - 1));
             return deepcopy(dataModel.value?.blocks);
           })()
         ),
+      };
+      return {
+        redo: () => {
+          updateBlocks(deepcopy(data.after || []));
+        },
+        undo: () => {
+          updateBlocks(deepcopy(data.before || []));
+        },
+      };
+    },
+  });
+
+  commander.registry({
+    name: "updateBlock",
+    execute: (newVal: VisualEditorBlockData, oldVal: VisualEditorBlockData) => {
+      let blocks = deepcopy(dataModel.value?.blocks || []);
+      let data = {
+        before: deepcopy(dataModel.value?.blocks),
+        after: (() => {
+          blocks = [...blocks];
+          const index = blocks.indexOf(oldVal);
+          if (index > -1) {
+            blocks.splice(index, 1, newVal);
+          }
+          return deepcopy(blocks);
+        })(),
       };
       return {
         redo: () => {
@@ -201,5 +225,9 @@ export function useVisualCommand({
     clear: () => commander.state.commands.clear(),
     placeTop: () => commander.state.commands.placeTop(),
     placeBottom: () => commander.state.commands.placeBottom(),
+    updateBlock: (
+      newVal: VisualEditorBlockData,
+      oldVal: VisualEditorBlockData
+    ) => commander.state.commands.updateBlock(newVal, oldVal),
   };
 }

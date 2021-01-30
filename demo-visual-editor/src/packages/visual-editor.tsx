@@ -14,6 +14,7 @@ import {
   VisualEditorModelValue,
   VisualEditorMarkLine,
 } from "./visual-editor.utils";
+import { $$dropdown, DropdownOption } from "./utils/dropdown-service";
 
 export const VisualEditor = defineComponent({
   props: {
@@ -75,6 +76,24 @@ export const VisualEditor = defineComponent({
       },
       updateBlocks: (blocks: VisualEditorBlockData[]) => {
         dataModel.value!.blocks = blocks;
+      },
+
+      importBlockData: async (block: VisualEditorBlockData) => {
+        const text = await $$dialog.textarea("", {
+          title: "请输入节点Json字符串",
+        });
+        try {
+          const data = JSON.parse(text || "");
+          if (typeof data !== "object") {
+            throw new Error();
+          }
+          commander.updateBlock(data, block);
+        } catch (error) {
+          ElMessageBox.alert("解析json字符串出错");
+        }
+      },
+      showBlockData: (block: VisualEditorBlockData) => {
+        $$dialog.textarea(JSON.stringify(block), { title: "节点数据" });
       },
     };
 
@@ -194,7 +213,6 @@ export const VisualEditor = defineComponent({
             moveY = startY;
           }
         }
-        console.log(dragState.markLines);
 
         const currentLeft = dragState.startLeft + moveX - startX;
         const currentTop = dragState.startTop + moveY - startY;
@@ -234,6 +252,8 @@ export const VisualEditor = defineComponent({
       const mouseup = (e: MouseEvent) => {
         document.removeEventListener("mousemove", mousemove);
         document.removeEventListener("mouseup", mouseup);
+        mark.x = null;
+        mark.y = null;
         if (dragState.dragging) {
           dragend.emit();
         }
@@ -285,6 +305,47 @@ export const VisualEditor = defineComponent({
 
       return { mousedown, mark };
     })();
+
+    // 其他事件
+    const handler = {
+      onContextmenuBlock: (e: MouseEvent, block: VisualEditorBlockData) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        $$dropdown({
+          reference: e,
+          content: () => (
+            <>
+              <DropdownOption
+                label="置顶节点"
+                icon="icon-place-top"
+                {...{ onClick: commander.placeTop }}
+              />
+              <DropdownOption
+                label="置底节点"
+                icon="icon-place-bottom"
+                {...{ onClick: commander.placeBottom }}
+              />
+              <DropdownOption
+                label="删除节点"
+                icon="icon-delete"
+                {...{ onClick: commander.delete }}
+              />
+              <DropdownOption
+                label="查看数据"
+                icon="icon-browse"
+                {...{ onClick: () => methods.showBlockData(block) }}
+              />
+              <DropdownOption
+                label="导入节点"
+                icon="icon-import"
+                {...{ onClick: () => methods.importBlockData(block) }}
+              />
+            </>
+          ),
+        });
+      },
+    };
 
     // 处理组件的选中状态
     const focusHandler = (() => {
@@ -445,6 +506,8 @@ export const VisualEditor = defineComponent({
                   {...{
                     onMousedown: (e: MouseEvent) =>
                       focusHandler.block.onMousedown(e, block),
+                    onContextmenu: (e: MouseEvent) =>
+                      handler.onContextmenuBlock(e, block),
                   }}
                 />
               ))}
