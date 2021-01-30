@@ -5,6 +5,9 @@ export interface VisualEditorBlockData {
   adjustPosition: boolean; // 是否需要调整位置
   focus: boolean; // 是否是选中状态
   zIndex: number; // z-index值
+  width: number;
+  height: number;
+  hasResize: boolean; // 是否调整过宽高
 }
 
 export interface VisualEditorModelValue {
@@ -34,6 +37,9 @@ export function createNewBlock(data: {
     adjustPosition: true,
     focus: false,
     zIndex: 0,
+    width: 0,
+    height: 0,
+    hasResize: false,
   };
 }
 
@@ -54,3 +60,8 @@ export function createVisualEditorConfig() {
 
 // 配置类型
 export type VisualEditorConfig = ReturnType<typeof createVisualEditorConfig>;
+
+export interface VisualEditorMarkLine {
+  x: { left: number; showLeft: number }[];
+  y: { top: number; showTop: number }[];
+}
