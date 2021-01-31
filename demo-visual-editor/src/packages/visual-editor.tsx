@@ -63,7 +63,15 @@ export const VisualEditor = defineComponent({
       selectBlock: computed(
         () => (dataModel.value?.blocks || [])[selectIndex.value]
       ),
+      editing: false,
     });
+
+    const classes = computed(() => [
+      "visual-editor",
+      {
+        editing: state.editing,
+      },
+    ]);
 
     const dragstart = createEvent();
     const dragend = createEvent();
@@ -322,6 +330,7 @@ export const VisualEditor = defineComponent({
     // 其他事件
     const handler = {
       onContextmenuBlock: (e: MouseEvent, block: VisualEditorBlockData) => {
+        if (!state.editing) return;
         e.preventDefault();
         e.stopPropagation();
 
@@ -381,7 +390,8 @@ export const VisualEditor = defineComponent({
             block: VisualEditorBlockData,
             index: number
           ) => {
-            e && e.stopPropagation();
+            if (!state.editing) return;
+
             e && e.preventDefault();
             // 只有元素未选中状态下， 才去处理
             if (!block.focus) {
@@ -447,6 +457,16 @@ export const VisualEditor = defineComponent({
         tip: "ctrl+y, ctrl+shift+z",
       },
       {
+        label: () => (state.editing ? "编辑" : "预览"),
+        icon: () => (state.editing ? "icon-edit" : "icon-browse"),
+        handler: () => {
+          if (!state.editing) {
+            methods.clearFocus();
+          }
+          state.editing = !state.editing;
+        },
+      },
+      {
         label: "导入",
         icon: "icon-import",
         handler: handleImport,
@@ -481,10 +501,14 @@ export const VisualEditor = defineComponent({
       },
     ];
 
+    const excuteFun = (fn: any) => {
+      return typeof fn === "function" ? fn() : fn;
+    };
+
     return () => {
       console.log("selectBlock", state.selectBlock);
       return (
-        <div class="visual-editor">
+        <div class={classes.value}>
           <div class="menu">
             {props.config?.componentList.map((component) => (
               <div
@@ -502,8 +526,8 @@ export const VisualEditor = defineComponent({
             {buttons.map((btn, index) => {
               const content = (
                 <div key={index} class="head-btn" onClick={btn.handler}>
-                  <i class={`iconfont ${btn.icon}`}></i>
-                  <span>{btn.label}</span>
+                  <i class={`iconfont ${excuteFun(btn.icon)}`}></i>
+                  <span>{excuteFun(btn.label)}</span>
                 </div>
               );
               if (!btn.tip) return content;

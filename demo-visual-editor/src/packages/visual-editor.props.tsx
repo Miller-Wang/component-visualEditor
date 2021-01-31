@@ -2,12 +2,14 @@ export enum VisualEditorPropsType {
   input = "input",
   color = "color",
   select = "select",
+  table = "table",
 }
 
 export interface VisualEditorProps {
   type: VisualEditorPropsType;
   label: string;
   options?: VisualEditorSelectOptions;
+  table?: VisualEditorTableOptions;
 }
 
 /** ------input------- */
@@ -43,5 +45,26 @@ export function createEditorSelectProps(
     type: VisualEditorPropsType.select,
     label,
     options,
+  };
+}
+
+/** ------table------- */
+
+export type VisualEditorTableOptions = {
+  options: {
+    label: string;
+    field: string; // 列绑定字段
+  }[];
+  showKey: string;
+};
+
+export function createEditorTableProp(
+  label: string,
+  options: VisualEditorTableOptions
+) {
+  return {
+    type: VisualEditorPropsType.table,
+    label,
+    table: options,
   };
 }

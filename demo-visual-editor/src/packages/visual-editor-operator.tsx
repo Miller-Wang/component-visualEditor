@@ -10,6 +10,7 @@ import {
   ElSelect,
 } from "element-plus";
 import { defineComponent, PropType, reactive, watch } from "vue";
+import { TablePropEditor } from "./components/table-prop-editor";
 import { VisualEditorPropsType } from "./visual-editor.props";
 import {
   VisualEditorBlockData,
@@ -114,23 +115,40 @@ export const VisualOperatorEditor = defineComponent({
             <>
               {Object.entries(component.props).map(([propName, propConfig]) => {
                 let item: JSX.Element;
-                if (propConfig.type === VisualEditorPropsType.input) {
-                  item = <ElInput v-model={state.editData[propName]} />;
-                } else if (propConfig.type === VisualEditorPropsType.color) {
-                  item = <ElColorPicker v-model={state.editData[propName]} />;
-                } else {
-                  item = (
-                    <ElSelect
-                      placeholder="请选择"
-                      v-model={state.editData[propName]}
-                    >
-                      {propConfig.options?.map((opt, i) => (
-                        <ElOption key={i} label={opt.label} value={opt.val}>
-                          {opt.label}
-                        </ElOption>
-                      ))}
-                    </ElSelect>
-                  );
+
+                switch (propConfig.type) {
+                  case VisualEditorPropsType.input:
+                    item = <ElInput v-model={state.editData[propName]} />;
+                    break;
+                  case VisualEditorPropsType.color:
+                    item = <ElColorPicker v-model={state.editData[propName]} />;
+                    break;
+                  case VisualEditorPropsType.select:
+                    item = (
+                      <ElSelect
+                        placeholder="请选择"
+                        v-model={state.editData[propName]}
+                      >
+                        {propConfig.options?.map((opt, i) => (
+                          <ElOption key={i} label={opt.label} value={opt.val}>
+                            {opt.label}
+                          </ElOption>
+                        ))}
+                      </ElSelect>
+                    );
+                    break;
+                  case VisualEditorPropsType.table:
+                    item = (
+                      <TablePropEditor
+                        v-model={state.editData[propName]}
+                        propConfig={propConfig}
+                      />
+                    );
+                    break;
+
+                  default:
+                    item = <></>;
+                    break;
                 }
 
                 return (

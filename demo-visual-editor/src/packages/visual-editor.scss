@@ -151,15 +151,15 @@ $primary: #409eff;
         overflow-y: auto;
         .visual-editor-block {
           position: absolute;
-          &::after {
-            $space: -3px;
-            position: absolute;
-            top: $space;
-            left: $space;
-            right: $space;
-            bottom: $space;
-            content: "";
-          }
+          // &::after {
+          //   $space: -3px;
+          //   position: absolute;
+          //   top: $space;
+          //   left: $space;
+          //   right: $space;
+          //   bottom: $space;
+          //   content: "";
+          // }
           &-focus {
             &::after {
               // 边框显示在伪元素上面
@@ -178,6 +178,25 @@ $primary: #409eff;
           top: 0;
           bottom: 0;
           border-left: 1px dashed $primary;
+        }
+      }
+    }
+  }
+  &.editing {
+    & > .body {
+      .container {
+        border: 1px dashed $primary;
+        box-sizing: border-box;
+        .visual-editor-block {
+          &::after {
+            $space: -3px;
+            position: absolute;
+            top: $space;
+            left: $space;
+            right: $space;
+            bottom: $space;
+            content: "";
+          }
         }
       }
     }
