@@ -143,7 +143,7 @@ $primary: #409eff;
       overflow: scroll;
       display: flex;
       justify-content: center;
-      .container {
+      .visual-editor-container {
         background-color: white;
         flex-shrink: 0;
         flex-grow: 0;
@@ -184,7 +184,7 @@ $primary: #409eff;
   }
   &.editing {
     & > .body {
-      .container {
+      .visual-editor-container {
         border: 1px dashed $primary;
         box-sizing: border-box;
         .visual-editor-block {
@@ -199,6 +199,59 @@ $primary: #409eff;
           }
         }
       }
+    }
+  }
+}
+
+.visual-editor-container {
+  background-color: white;
+  flex-shrink: 0;
+  flex-grow: 0;
+  position: relative;
+  overflow-y: auto;
+  .visual-editor-block {
+    position: absolute;
+    // &::after {
+    //   $space: -3px;
+    //   position: absolute;
+    //   top: $space;
+    //   left: $space;
+    //   right: $space;
+    //   bottom: $space;
+    //   content: "";
+    // }
+    &-focus {
+      &::after {
+        // 边框显示在伪元素上面
+        border: 1px dashed $primary;
+      }
+    }
+  }
+  .mark-line-y {
+    position: absolute;
+    left: 0;
+    right: 0;
+    border-top: 1px dashed $primary;
+  }
+  .mark-line-x {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    border-left: 1px dashed $primary;
+  }
+  .container-edit-button {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    border: solid 2px $ibc;
+    color: $itc;
+    padding: 5px 12px;
+    cursor: pointer;
+    .iconfont {
+      color: $icc;
+    }
+    &:hover {
+      background-color: #f2f2f2;
     }
   }
 }

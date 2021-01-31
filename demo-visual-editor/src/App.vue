@@ -5,6 +5,9 @@
       :config="visualConfig"
       :formData="formData"
     />
+    <div style="text-align: center">
+      <!-- {{ JSON.stringify(formData) }} -->
+    </div>
   </div>
 </template>
 <script lang="ts">
