@@ -14,8 +14,13 @@ import {
   VisualEditorModelValue,
   VisualEditorMarkLine,
 } from "./visual-editor.utils";
-import { $$dropdown, DropdownOption } from "./utils/dropdown-service";
+import {
+  $$dropdown,
+  DropdownOption as DPOption,
+} from "./utils/dropdown-service";
 import { VisualOperatorEditor } from "./visual-editor-operator";
+
+const DropdownOption = DPOption as any;
 
 export const VisualEditor = defineComponent({
   props: {
@@ -27,6 +32,7 @@ export const VisualEditor = defineComponent({
       type: Object as PropType<VisualEditorConfig>,
       require: true,
     },
+    formData: { type: Object as PropType<Record<string, any>>, required: true },
   },
   emits: {
     "update:modelValue": (val?: VisualEditorModelValue) => true,
@@ -63,13 +69,13 @@ export const VisualEditor = defineComponent({
       selectBlock: computed(
         () => (dataModel.value?.blocks || [])[selectIndex.value]
       ),
-      editing: false,
+      preview: false,
     });
 
     const classes = computed(() => [
       "visual-editor",
       {
-        editing: state.editing,
+        editing: !state.preview,
       },
     ]);
 
@@ -287,7 +293,7 @@ export const VisualEditor = defineComponent({
             const { focus, unfocus } = focusData.value;
             // 当前选中的block
             const { top, left, width, height } = state.selectBlock!;
-            let lines = { x: [], y: [] } as VisualEditorMarkLine;
+            const lines = { x: [], y: [] } as VisualEditorMarkLine;
             [
               ...unfocus,
               {
@@ -330,7 +336,7 @@ export const VisualEditor = defineComponent({
     // 其他事件
     const handler = {
       onContextmenuBlock: (e: MouseEvent, block: VisualEditorBlockData) => {
-        if (!state.editing) return;
+        if (state.preview) return;
         e.preventDefault();
         e.stopPropagation();
 
@@ -341,27 +347,27 @@ export const VisualEditor = defineComponent({
               <DropdownOption
                 label="置顶节点"
                 icon="icon-place-top"
-                {...{ onClick: commander.placeTop }}
+                onClick={commander.placeTop}
               />
               <DropdownOption
                 label="置底节点"
                 icon="icon-place-bottom"
-                {...{ onClick: commander.placeBottom }}
+                onClick={commander.placeBottom}
               />
               <DropdownOption
                 label="删除节点"
                 icon="icon-delete"
-                {...{ onClick: commander.delete }}
+                onClick={commander.delete}
               />
               <DropdownOption
                 label="查看数据"
                 icon="icon-browse"
-                {...{ onClick: () => methods.showBlockData(block) }}
+                onClick={() => methods.showBlockData(block)}
               />
               <DropdownOption
                 label="导入节点"
                 icon="icon-import"
-                {...{ onClick: () => methods.importBlockData(block) }}
+                onClick={() => methods.importBlockData(block)}
               />
             </>
           ),
@@ -390,7 +396,7 @@ export const VisualEditor = defineComponent({
             block: VisualEditorBlockData,
             index: number
           ) => {
-            if (!state.editing) return;
+            if (state.preview) return;
 
             e && e.preventDefault();
             // 只有元素未选中状态下， 才去处理
@@ -457,13 +463,13 @@ export const VisualEditor = defineComponent({
         tip: "ctrl+y, ctrl+shift+z",
       },
       {
-        label: () => (state.editing ? "编辑" : "预览"),
-        icon: () => (state.editing ? "icon-edit" : "icon-browse"),
+        label: () => (state.preview ? "编辑" : "预览"),
+        icon: () => (state.preview ? "icon-edit" : "icon-browse"),
         handler: () => {
-          if (!state.editing) {
+          state.preview = !state.preview;
+          if (state.preview) {
             methods.clearFocus();
           }
-          state.editing = !state.editing;
         },
       },
       {
@@ -552,6 +558,7 @@ export const VisualEditor = defineComponent({
                     block={block}
                     key={index}
                     config={props.config}
+                    formData={props.formData}
                     {...{
                       onMousedown: (e: MouseEvent) =>
                         focusHandler.block.onMousedown(e, block, index),
