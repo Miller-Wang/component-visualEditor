@@ -1,6 +1,10 @@
 <template>
   <div class="app">
-    <visual-editor v-model="jsonData" :config="visualConfig" />
+    <visual-editor
+      v-model="jsonData"
+      :config="visualConfig"
+      :formData="formData"
+    />
   </div>
 </template>
 <script lang="ts">
@@ -17,25 +21,8 @@ export default defineComponent({
     return {
       visualConfig,
       jsonData: jsonData,
-      jsonData2: {
-        container: {
-          height: 500,
-          width: 800,
-        },
-        blocks: [
-          {
-            componentKey: "button",
-            top: 100,
-            left: 100,
-            focus: false,
-          },
-          {
-            componentKey: "input",
-            top: 200,
-            left: 200,
-            focus: false,
-          },
-        ],
+      formData: {
+        username: "admin",
       },
     };
   },

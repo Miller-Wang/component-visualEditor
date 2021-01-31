@@ -1,1 +1,73 @@
-{"container":{"height":500,"width":800},"blocks":[{"componentKey":"text","top":143,"left":240,"adjustPosition":false,"focus":false,"zIndex":0,"width":64,"height":22,"hasResize":false},{"componentKey":"button","top":137,"left":455,"adjustPosition":false,"focus":false,"zIndex":0,"width":98,"height":40,"hasResize":false},{"componentKey":"input","top":288,"left":234,"adjustPosition":false,"focus":false,"zIndex":0,"width":178,"height":40,"hasResize":false}]}
+{
+  "container": {
+    "height": 500,
+    "width": 800
+  },
+  "blocks": [
+    {
+      "componentKey": "select",
+      "top": 143,
+      "left": 222.5,
+      "adjustPosition": false,
+      "focus": true,
+      "zIndex": 0,
+      "width": 193,
+      "height": 40,
+      "hasResize": false,
+      "props": {
+        "options": [
+          {
+            "label": "1",
+            "value": "1"
+          },
+          {
+            "label": "2",
+            "value": "2"
+          },
+          {
+            "label": "3",
+            "value": "3"
+          }
+        ]
+      }
+    },
+    {
+      "componentKey": "button",
+      "top": 13,
+      "left": 459,
+      "adjustPosition": false,
+      "focus": false,
+      "zIndex": 0,
+      "width": 70,
+      "height": 40,
+      "hasResize": false,
+      "props": {
+        "text": "测试",
+        "type": "primary",
+        "size": "medium"
+      }
+    },
+    {
+      "componentKey": "text",
+      "top": 262,
+      "left": 552,
+      "adjustPosition": false,
+      "focus": false,
+      "zIndex": 0,
+      "width": 64,
+      "height": 22,
+      "hasResize": false
+    },
+    {
+      "componentKey": "input",
+      "top": 267,
+      "left": 215,
+      "adjustPosition": false,
+      "focus": false,
+      "zIndex": 0,
+      "width": 178,
+      "height": 40,
+      "hasResize": false
+    }
+  ]
+}

@@ -11,6 +11,7 @@ export interface VisualEditorBlockData {
   height: number;
   hasResize: boolean; // 是否调整过宽高
   props?: Record<string, any>; // 组件的设计属性
+  model?: Record<string, any>; // 绑定的字段
 }
 
 export interface VisualEditorModelValue {
@@ -25,8 +26,9 @@ export interface VisualEditorComponent {
   key: string;
   label: string;
   preview: () => JSX.Element;
-  render: (data: { props: any }) => JSX.Element;
+  render: (data: { props: any; model: any }) => JSX.Element;
   props?: Record<string, VisualEditorProps>;
+  model?: Record<string, string>; // 绑定的字段
 }
 
 export function createNewBlock(data: {
@@ -47,6 +49,15 @@ export function createNewBlock(data: {
   };
 }
 
+export interface BindModelValue {
+  field: string;
+  row: any;
+  binding: {
+    value: string;
+    onChange: (val: any) => void;
+  };
+}
+
 export function createVisualEditorConfig() {
   const componentList: VisualEditorComponent[] = [];
   const componentMap: Record<string, VisualEditorComponent> = {};
@@ -54,13 +65,24 @@ export function createVisualEditorConfig() {
   return {
     componentList,
     componentMap,
-    registry: <Props extends Record<string, VisualEditorProps>>(
+    registry: <
+      Props extends Record<string, VisualEditorProps>,
+      Model extends Record<string, string> = {}
+    >(
       key: string,
       component: {
         label: string;
         preview: () => JSX.Element;
-        render: (data: { props: { [k in keyof Props]: any } }) => JSX.Element;
+        render: (data: {
+          props: { [k in keyof Props]: any };
+          model: Partial<
+            {
+              [key in keyof Model]: BindModelValue;
+            }
+          >;
+        }) => JSX.Element;
         props?: Props;
+        model?: Model;
       }
     ) => {
       const comp = { ...component, key };
