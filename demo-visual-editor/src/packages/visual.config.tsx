@@ -6,6 +6,8 @@ import {
   createEditorSelectProps,
   createEditorTableProp,
 } from "./visual-editor.props";
+import { NumberRange } from "./components/number-range";
+import "../visual.config.scss";
 
 const [ElInput]: any[] = [Input];
 
@@ -103,6 +105,26 @@ visualConfig.registry("select", {
       ],
       showKey: "label",
     }),
+  },
+});
+
+visualConfig.registry("number-range", {
+  label: "数字范围输入框",
+  preview: () => <NumberRange style={{ width: "100%" }} />,
+  render: ({ model }) => (
+    <NumberRange
+      {...{
+        start: model.start.value,
+        "onUpdate:start": model.start.onChange,
+        end: model.end.value,
+        "onUpdate:end": model.end.onChange,
+      }}
+    />
+  ),
+
+  model: {
+    start: "起始绑定字段",
+    end: "结束绑定字段",
   },
 });
 

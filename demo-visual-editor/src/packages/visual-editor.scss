@@ -35,6 +35,8 @@ $primary: #409eff;
     left: 0;
     bottom: 0;
     background-color: white;
+    overflow-y: auto;
+    padding-bottom: 300px;
     .menu-item {
       position: relative;
       text-align: center;

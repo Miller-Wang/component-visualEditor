@@ -49,15 +49,6 @@ export function createNewBlock(data: {
   };
 }
 
-export interface BindModelValue {
-  field: string;
-  row: any;
-  binding: {
-    value: string;
-    onChange: (val: any) => void;
-  };
-}
-
 export function createVisualEditorConfig() {
   const componentList: VisualEditorComponent[] = [];
   const componentMap: Record<string, VisualEditorComponent> = {};
@@ -77,7 +68,7 @@ export function createVisualEditorConfig() {
           props: { [k in keyof Props]: any };
           model: Partial<
             {
-              [key in keyof Model]: BindModelValue;
+              [key in keyof Model]: any;
             }
           >;
         }) => JSX.Element;

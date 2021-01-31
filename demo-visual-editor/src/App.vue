@@ -6,7 +6,7 @@
       :formData="formData"
     />
     <div style="text-align: center">
-      <!-- {{ JSON.stringify(formData) }} -->
+      {{ JSON.stringify(formData) }}
     </div>
   </div>
 </template>
@@ -37,5 +37,7 @@ html,
 body {
   margin: 0;
   padding: 0;
+}
+.app {
 }
 </style>

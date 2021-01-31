@@ -44,24 +44,24 @@ export const VisualEditorBlock = defineComponent({
 
     return () => {
       const component = props.config?.componentMap[props.block!.componentKey];
-      // const formData = props.formData as Record<string, any>;
+      const formData = props.formData as Record<string, any>;
       const Render = component?.render({
         props: props.block?.props || {},
-        model: props.block?.model || {},
         /**@ts-ignore */
-        // model: Object.entries(props.block?.model || {}).reduce(
-        //   (prev, [propName, modelName]) => {
-        //     prev[propName] = {
-        //       [propName === "default" ? "modelValue" : propName]: props
-        //         .formData[modelName],
-        //       [modelName === "default" ? "onUpdate:modelValue" : "onChange"]: (
-        //         val: any
-        //       ) => (props.formData[modelName] = val),
-        //     };
-        //     return prev;
-        //   },
-        //   {} as Record<string, any>
-        // ),
+        model: Object.keys(component.model || {}).reduce((prev, propName) => {
+          const modelName = !props.block?.model
+            ? null
+            : props.block?.model[propName];
+          prev[propName] = {
+            [propName === "default" ? "modelValue" : propName]: props.formData[
+              modelName
+            ],
+            [modelName === "default" ? "onUpdate:modelValue" : "onChange"]: (
+              val: any
+            ) => modelName && (formData[modelName] = val),
+          };
+          return prev;
+        }, {} as Record<string, any>),
       });
       return (
         <div class={classes.value} style={styles.value} ref={el}>
