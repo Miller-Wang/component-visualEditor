@@ -1,4 +1,5 @@
 import { computed, defineComponent, onMounted, PropType, ref } from "vue";
+import { BlockResizer } from "./components/block-resizer";
 import {
   VisualEditorBlockData,
   VisualEditorConfig,
@@ -46,6 +47,12 @@ export const VisualEditorBlock = defineComponent({
       const component = props.config?.componentMap[props.block!.componentKey];
       const formData = props.formData as Record<string, any>;
       const Render = component?.render({
+        size: props.block?.hasResize
+          ? {
+              width: props.block.width,
+              height: props.block.height,
+            }
+          : {},
         props: props.block?.props || {},
         /**@ts-ignore */
         model: Object.keys(component.model || {}).reduce((prev, propName) => {
@@ -63,9 +70,16 @@ export const VisualEditorBlock = defineComponent({
           return prev;
         }, {} as Record<string, any>),
       });
+      const { width, height } = component?.resize || {};
       return (
         <div class={classes.value} style={styles.value} ref={el}>
           {Render}
+          {props.block?.focus && (width || height) && (
+            <BlockResizer
+              block={props.block!}
+              component={component!}
+            ></BlockResizer>
+          )}
         </div>
       );
     };

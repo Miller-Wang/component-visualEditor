@@ -26,9 +26,14 @@ export interface VisualEditorComponent {
   key: string;
   label: string;
   preview: () => JSX.Element;
-  render: (data: { props: any; model: any }) => JSX.Element;
+  render: (data: {
+    props: any;
+    model: any;
+    size: { width?: number; height?: number };
+  }) => JSX.Element;
   props?: Record<string, VisualEditorProps>;
   model?: Record<string, string>; // 绑定的字段
+  resize?: { width?: boolean; height?: boolean };
 }
 
 export function createNewBlock(data: {
@@ -66,14 +71,12 @@ export function createVisualEditorConfig() {
         preview: () => JSX.Element;
         render: (data: {
           props: { [k in keyof Props]: any };
-          model: Partial<
-            {
-              [key in keyof Model]: any;
-            }
-          >;
+          model: Partial<{ [key in keyof Model]: any }>;
+          size: { width?: number; height?: number };
         }) => JSX.Element;
         props?: Props;
         model?: Model;
+        resize?: { width?: boolean; height?: boolean };
       }
     ) => {
       const comp = { ...component, key };
