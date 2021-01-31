@@ -198,7 +198,7 @@ export function useVisualCommand({
         before: deepcopy(dataModel.value?.blocks),
         after: (() => {
           blocks = [...blocks];
-          const index = blocks.indexOf(oldVal);
+          const index = dataModel.value!.blocks.indexOf(oldVal);
           if (index > -1) {
             blocks.splice(index, 1, newVal);
           }
@@ -211,6 +211,24 @@ export function useVisualCommand({
         },
         undo: () => {
           updateBlocks(deepcopy(data.before || []));
+        },
+      };
+    },
+  });
+
+  commander.registry({
+    name: "updateModelValue",
+    execute: (val: VisualEditorModelValue) => {
+      const data = {
+        before: deepcopy(dataModel.value),
+        after: deepcopy(val),
+      };
+      return {
+        redo: () => {
+          dataModel.value = data.after;
+        },
+        undo: () => {
+          dataModel.value = data.before;
         },
       };
     },
@@ -229,5 +247,7 @@ export function useVisualCommand({
       newVal: VisualEditorBlockData,
       oldVal: VisualEditorBlockData
     ) => commander.state.commands.updateBlock(newVal, oldVal),
+    updateModelValue: (val: VisualEditorModelValue) =>
+      commander.state.commands.updateModelValue(val),
   };
 }
