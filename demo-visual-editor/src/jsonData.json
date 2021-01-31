@@ -43,7 +43,7 @@
       "hasResize": false,
       "props": {
         "text": "测试",
-        "type": "primary",
+        "type": "",
         "size": "medium"
       }
     },

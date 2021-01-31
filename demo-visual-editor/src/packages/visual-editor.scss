@@ -190,6 +190,10 @@ $primary: #409eff;
         border: 1px dashed $primary;
         box-sizing: border-box;
         .visual-editor-block {
+          .el-button,
+          .el-input {
+            transition: none;
+          }
           &::after {
             $space: -3px;
             position: absolute;

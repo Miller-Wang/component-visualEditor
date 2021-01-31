@@ -39,7 +39,7 @@ visualConfig.registry("button", {
     <ElButton
       type={props.type}
       size={props.size}
-      style={{ width: `${size.width}px`, height: `${size.height} px` }}
+      style={{ width: `${size.width}px`, height: `${size.height}px` }}
     >
       {props.text || "按钮"}
     </ElButton>
