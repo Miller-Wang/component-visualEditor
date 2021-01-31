@@ -57,8 +57,12 @@ export const VisualEditor = defineComponent({
       };
     });
 
+    const selectIndex = ref(-1);
     const state = reactive({
-      selectBlock: undefined as undefined | VisualEditorBlockData, // 当前选中的block
+      // selectBlock: undefined as undefined | VisualEditorBlockData, // 当前选中的block
+      selectBlock: computed(
+        () => (dataModel.value?.blocks || [])[selectIndex.value]
+      ),
     });
 
     const dragstart = createEvent();
@@ -209,9 +213,9 @@ export const VisualEditor = defineComponent({
         // 水平、垂直移动
         if (e.shiftKey) {
           if (Math.abs(e.clientX - startX) > Math.abs(e.clientY - startY)) {
-            moveX = startX;
-          } else {
             moveY = startY;
+          } else {
+            moveX = startX;
           }
         }
 
@@ -276,7 +280,15 @@ export const VisualEditor = defineComponent({
             // 当前选中的block
             const { top, left, width, height } = state.selectBlock!;
             let lines = { x: [], y: [] } as VisualEditorMarkLine;
-            unfocus.forEach((block) => {
+            [
+              ...unfocus,
+              {
+                top: 0,
+                left: 0,
+                width: dataModel.value!.container.width,
+                height: dataModel.value!.container.height,
+              },
+            ].forEach((block) => {
               const { top: t, left: l, width: w, height: h } = block;
               // y轴对齐方式
               lines.y.push({ top: t, showTop: t }); // 顶对顶
@@ -359,11 +371,16 @@ export const VisualEditor = defineComponent({
             }
 
             methods.clearFocus();
-            state.selectBlock = undefined;
+            // state.selectBlock = undefined;
+            selectIndex.value = -1;
           },
         },
         block: {
-          onMousedown: (e: MouseEvent, block: VisualEditorBlockData) => {
+          onMousedown: (
+            e: MouseEvent,
+            block: VisualEditorBlockData,
+            index: number
+          ) => {
             e && e.stopPropagation();
             e && e.preventDefault();
             // 只有元素未选中状态下， 才去处理
@@ -375,7 +392,8 @@ export const VisualEditor = defineComponent({
                 block.focus = true;
               }
             }
-            state.selectBlock = block;
+            // state.selectBlock = block;
+            selectIndex.value = index;
             // 处理组件的选中移动
             blockDragger.mousedown(e);
           },
@@ -512,7 +530,7 @@ export const VisualEditor = defineComponent({
                     config={props.config}
                     {...{
                       onMousedown: (e: MouseEvent) =>
-                        focusHandler.block.onMousedown(e, block),
+                        focusHandler.block.onMousedown(e, block, index),
                       onContextmenu: (e: MouseEvent) =>
                         handler.onContextmenuBlock(e, block),
                     }}

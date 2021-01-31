@@ -148,6 +148,7 @@ $primary: #409eff;
         flex-shrink: 0;
         flex-grow: 0;
         position: relative;
+        overflow-y: auto;
         .visual-editor-block {
           position: absolute;
           &::after {

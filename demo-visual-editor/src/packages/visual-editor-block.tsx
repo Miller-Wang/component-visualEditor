@@ -43,7 +43,9 @@ export const VisualEditorBlock = defineComponent({
 
     return () => {
       const component = props.config?.componentMap[props.block!.componentKey];
-      const Render = component?.render();
+      const Render = component?.render({
+        props: props.block?.props || {},
+      });
       return (
         <div class={classes.value} style={styles.value} ref={el}>
           {Render}

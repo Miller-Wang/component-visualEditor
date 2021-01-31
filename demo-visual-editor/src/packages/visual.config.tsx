@@ -11,7 +11,11 @@ const visualConfig = createVisualEditorConfig();
 visualConfig.registry("text", {
   label: "文本",
   preview: () => "预览文本",
-  render: () => "渲染文本",
+  render: ({ props }) => (
+    <span style={{ color: props.color, fontSize: props.size }}>
+      {props.text || "默认文本"}
+    </span>
+  ),
   props: {
     text: createEditorInputProps("显示文本"),
     color: createEditorColorProps("字体颜色"),
@@ -26,7 +30,11 @@ visualConfig.registry("text", {
 visualConfig.registry("button", {
   label: "按钮",
   preview: () => <ElButton>按钮</ElButton>,
-  render: () => <ElButton>渲染按钮</ElButton>,
+  render: ({ props }) => (
+    <ElButton type={props.type} size={props.size}>
+      {props.text || "按钮"}
+    </ElButton>
+  ),
   props: {
     text: createEditorInputProps("显示文本"),
     type: createEditorSelectProps("按钮类型", [
@@ -50,6 +58,15 @@ visualConfig.registry("input", {
   label: "输入框",
   preview: () => <ElInput />,
   render: () => <ElInput />,
+  props: {
+    text: createEditorInputProps("显示文本"),
+    size: createEditorSelectProps("输入框大小", [
+      { label: "默认", val: "" },
+      { label: "中等", val: "medium" },
+      { label: "小", val: "small" },
+      { label: "极小", val: "mini" },
+    ]),
+  },
 });
 
 export default visualConfig;

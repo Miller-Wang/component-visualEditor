@@ -85,6 +85,8 @@ export const VisualOperatorEditor = defineComponent({
       }
     );
 
+    // const renderComponent = (props: Record<string, VisualEditorProps>) => {};
+
     return () => {
       if (!props.block) {
         content = (
@@ -122,12 +124,8 @@ export const VisualOperatorEditor = defineComponent({
                       placeholder="请选择"
                       v-model={state.editData[propName]}
                     >
-                      {propConfig.options?.map((opt) => (
-                        <ElOption
-                          key={opt.val}
-                          label={opt.label}
-                          value={opt.val}
-                        >
+                      {propConfig.options?.map((opt, i) => (
+                        <ElOption key={i} label={opt.label} value={opt.val}>
                           {opt.label}
                         </ElOption>
                       ))}
@@ -139,6 +137,7 @@ export const VisualOperatorEditor = defineComponent({
                   <ElFormItem
                     {...{ labelPosition: "top" }}
                     label={propConfig.label}
+                    key={propName}
                   >
                     {item}
                   </ElFormItem>
