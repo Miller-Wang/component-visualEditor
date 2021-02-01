@@ -12,6 +12,7 @@ export interface VisualEditorBlockData {
   hasResize: boolean; // 是否调整过宽高
   props?: Record<string, any>; // 组件的设计属性
   model?: Record<string, any>; // 绑定的字段
+  slotName?: string; // 组件唯一标识
 }
 
 export interface VisualEditorModelValue {

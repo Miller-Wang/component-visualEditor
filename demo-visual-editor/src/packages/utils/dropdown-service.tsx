@@ -50,6 +50,16 @@ const SerivceComponent = defineComponent({
       })(),
     });
 
+    const methods = {
+      show: async () => {
+        await state.mounted;
+        state.showFlag = true;
+      },
+      hide: async () => {
+        state.showFlag = false;
+      },
+    };
+
     const service = (option: DropdownServiceOption) => {
       state.option = option;
       state.showFlag = true;
@@ -64,16 +74,6 @@ const SerivceComponent = defineComponent({
         state.top = clientY;
       }
       methods.show();
-    };
-
-    const methods = {
-      show: async () => {
-        await state.mounted;
-        state.showFlag = true;
-      },
-      hide: async () => {
-        state.showFlag = false;
-      },
     };
 
     const classes = computed(() => [

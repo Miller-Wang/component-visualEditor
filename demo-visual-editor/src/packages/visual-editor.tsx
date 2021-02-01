@@ -542,6 +542,7 @@ export const VisualEditor = defineComponent({
                 key={index}
                 config={props.config}
                 formData={props.formData}
+                slots={ctx.slots}
                 {...{
                   onMousedown: (e: MouseEvent) =>
                     focusHandler.block.onMousedown(e, block, index),
@@ -606,6 +607,7 @@ export const VisualEditor = defineComponent({
                         key={index}
                         config={props.config}
                         formData={props.formData}
+                        slots={ctx.slots}
                         {...{
                           onMousedown: (e: MouseEvent) =>
                             focusHandler.block.onMousedown(e, block, index),
