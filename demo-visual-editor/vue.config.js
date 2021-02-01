@@ -1,4 +1,4 @@
 module.exports = {
   outputDir: "editor",
-  publicPath: "/",
+  publicPath: "/zhufeng-vue-drops-2101",
 };
