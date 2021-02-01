@@ -108,6 +108,7 @@ visualConfig.registry("select", {
       options: [
         { label: "显示值", field: "label" },
         { label: "绑定值", field: "value" },
+        { label: "备注", field: "remark" },
       ],
       showKey: "label",
     }),
@@ -117,7 +118,7 @@ visualConfig.registry("select", {
 visualConfig.registry("number-range", {
   label: "数字范围输入框",
   resize: { width: true },
-  preview: () => <NumberRange style={{ width: "100%" }} />,
+  preview: () => <NumberRange />,
   render: ({ model, size }) => (
     <NumberRange
       style={{ width: `${size.width}px` }}

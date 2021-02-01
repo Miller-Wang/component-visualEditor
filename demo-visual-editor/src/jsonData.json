@@ -5,69 +5,56 @@
   },
   "blocks": [
     {
-      "componentKey": "select",
-      "top": 143,
-      "left": 222.5,
-      "adjustPosition": false,
-      "focus": true,
-      "zIndex": 0,
-      "width": 193,
-      "height": 40,
-      "hasResize": false,
-      "props": {
-        "options": [
-          {
-            "label": "1",
-            "value": "1"
-          },
-          {
-            "label": "2",
-            "value": "2"
-          },
-          {
-            "label": "3",
-            "value": "3"
-          }
-        ]
-      }
-    },
-    {
       "componentKey": "button",
-      "top": 13,
-      "left": 459,
+      "top": 106,
+      "left": 231,
       "adjustPosition": false,
       "focus": false,
       "zIndex": 0,
-      "width": 70,
-      "height": 40,
+      "width": 0,
+      "height": 0,
       "hasResize": false,
-      "props": {
-        "text": "测试",
-        "type": "",
-        "size": "medium"
-      }
-    },
-    {
-      "componentKey": "text",
-      "top": 262,
-      "left": 552,
-      "adjustPosition": false,
-      "focus": false,
-      "zIndex": 0,
-      "width": 64,
-      "height": 22,
-      "hasResize": false
+      "props": {},
+      "model": {}
     },
     {
       "componentKey": "input",
-      "top": 267,
-      "left": 215,
+      "top": 148,
+      "left": 602,
       "adjustPosition": false,
       "focus": false,
       "zIndex": 0,
-      "width": 178,
-      "height": 40,
-      "hasResize": false
+      "width": 0,
+      "height": 0,
+      "hasResize": false,
+      "props": {},
+      "model": {}
+    },
+    {
+      "componentKey": "select",
+      "top": 243,
+      "left": 312,
+      "adjustPosition": false,
+      "focus": false,
+      "zIndex": 0,
+      "width": 0,
+      "height": 0,
+      "hasResize": false,
+      "props": {},
+      "model": {}
+    },
+    {
+      "componentKey": "text",
+      "top": 86,
+      "left": 477,
+      "adjustPosition": false,
+      "focus": false,
+      "zIndex": 0,
+      "width": 0,
+      "height": 0,
+      "hasResize": false,
+      "props": {},
+      "model": {}
     }
   ]
 }

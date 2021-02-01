@@ -55,7 +55,6 @@ const ServiceComponent = defineComponent({
       service: (option: TablePropEditorServiceOption) => {
         state.option = option;
         state.editorData = deepcopy(option.data || []);
-        debugger;
         methods.show();
       },
       show: async () => {

@@ -22,9 +22,14 @@ export const NumberRange = defineComponent({
 
     return () => (
       <div class="number-range">
-        <input type="text" v-model={startModel.value} />
+        <div>
+          <input type="text" v-model={startModel.value} />
+        </div>
+
         <span>~</span>
-        <input type="text" v-model={endModel.value} />
+        <div>
+          <input type="text" v-model={endModel.value} />
+        </div>
       </div>
     );
   },

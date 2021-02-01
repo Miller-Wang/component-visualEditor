@@ -11,7 +11,10 @@ import {
 } from "element-plus";
 import { defineComponent, PropType, reactive, watch } from "vue";
 import { TablePropEditor } from "./components/table-prop-editor";
-import { VisualEditorPropsType } from "./visual-editor.props";
+import {
+  VisualEditorProps,
+  VisualEditorPropsType,
+} from "./visual-editor.props";
 import {
   VisualEditorBlockData,
   VisualEditorConfig,
@@ -42,8 +45,6 @@ export const VisualOperatorEditor = defineComponent({
   },
 
   setup(props) {
-    let content: JSX.Element;
-
     const state = reactive({
       editData: {} as any,
     });
@@ -58,20 +59,15 @@ export const VisualOperatorEditor = defineComponent({
           });
         } else {
           // 当前编辑block数据属性
-          props.updateBlock(
-            {
-              ...props.block,
-              props: state.editData,
-            },
-            props.block
-          );
+          const newBlock = state.editData;
+          props.updateBlock(newBlock, props.block);
         }
       },
       reset: () => {
         if (!props.block) {
           state.editData = deepcopy((props.dataModel as any).value.container);
         } else {
-          state.editData = deepcopy(props.block.props || {});
+          state.editData = deepcopy(props.block);
         }
       },
     };
@@ -86,11 +82,39 @@ export const VisualOperatorEditor = defineComponent({
       }
     );
 
-    // const renderComponent = (props: Record<string, VisualEditorProps>) => {};
+    const renderEditor = (propName: string, propConfig: VisualEditorProps) => {
+      return {
+        [VisualEditorPropsType.input]: () => (
+          <ElInput v-model={state.editData.props[propName]} />
+        ),
+        [VisualEditorPropsType.color]: () => (
+          <ElColorPicker v-model={state.editData.props[propName]} />
+        ),
+        [VisualEditorPropsType.select]: () => (
+          <ElSelect
+            placeholder="请选择"
+            v-model={state.editData.props[propName]}
+          >
+            {(() => {
+              return propConfig.options!.map((opt, i) => (
+                <ElOption key={i} label={opt.label} value={opt.val} />
+              ));
+            })()}
+          </ElSelect>
+        ),
+        [VisualEditorPropsType.table]: () => (
+          <TablePropEditor
+            v-model={state.editData.props[propName]}
+            propConfig={propConfig}
+          />
+        ),
+      }[propConfig.type]();
+    };
 
     return () => {
+      let content: JSX.Element[] = [];
       if (!props.block) {
-        content = (
+        content.push(
           <>
             <ElFormItem label="容器宽度">
               <ElInputNumber
@@ -110,65 +134,47 @@ export const VisualOperatorEditor = defineComponent({
         const { componentKey } = props.block;
         const component = props.config?.componentMap[componentKey];
 
-        if (!!component && component.props) {
-          content = (
-            <>
-              {Object.entries(component.props).map(([propName, propConfig]) => {
-                let item: JSX.Element;
-
-                switch (propConfig.type) {
-                  case VisualEditorPropsType.input:
-                    item = <ElInput v-model={state.editData[propName]} />;
-                    break;
-                  case VisualEditorPropsType.color:
-                    item = <ElColorPicker v-model={state.editData[propName]} />;
-                    break;
-                  case VisualEditorPropsType.select:
-                    item = (
-                      <ElSelect
-                        placeholder="请选择"
-                        v-model={state.editData[propName]}
-                      >
-                        {propConfig.options?.map((opt, i) => (
-                          <ElOption key={i} label={opt.label} value={opt.val}>
-                            {opt.label}
-                          </ElOption>
-                        ))}
-                      </ElSelect>
-                    );
-                    break;
-                  case VisualEditorPropsType.table:
-                    item = (
-                      <TablePropEditor
-                        v-model={state.editData[propName]}
-                        propConfig={propConfig}
-                      />
-                    );
-                    break;
-
-                  default:
-                    item = <></>;
-                    break;
-                }
-
-                return (
-                  <ElFormItem
-                    {...{ labelPosition: "top" }}
-                    label={propConfig.label}
-                    key={propName}
-                  >
-                    {item}
-                  </ElFormItem>
-                );
-              })}
-            </>
-          );
+        if (component) {
+          if (component.props) {
+            content.push(
+              <>
+                {Object.entries(component.props).map(
+                  ([propName, propConfig]) => (
+                    <ElFormItem
+                      {...{ labelPosition: "top" }}
+                      label={propConfig.label}
+                      key={propName}
+                    >
+                      {renderEditor(propName, propConfig)}
+                    </ElFormItem>
+                  )
+                )}
+              </>
+            );
+          }
+          if (component.model) {
+            content.push(
+              <>
+                {Object.entries(component.model).map(
+                  ([modelName, label], i) => (
+                    <ElFormItem
+                      {...{ labelPosition: "top" }}
+                      label={label}
+                      key={i}
+                    >
+                      <ElInput v-model={state.editData.model[modelName]} />
+                    </ElFormItem>
+                  )
+                )}
+              </>
+            );
+          }
         }
       }
       return (
         <div class="operator">
           <ElForm>
-            {content}
+            {content.map((el) => el)}
             <ElFormItem>
               <ElButton {...({ onClick: methods.apply } as any)}>应用</ElButton>
               <ElButton {...({ onClick: methods.reset } as any)}>重置</ElButton>
