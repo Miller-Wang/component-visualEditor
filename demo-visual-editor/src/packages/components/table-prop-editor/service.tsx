@@ -81,7 +81,9 @@ const ServiceComponent = defineComponent({
       onCancel: () => {
         methods.hide();
       },
-      onDelete: () => {},
+      onDelete: (index: number) => {
+        state.editorData.splice(index, 1);
+      },
     };
 
     Object.assign(ctx.proxy!, methods);
@@ -107,9 +109,16 @@ const ServiceComponent = defineComponent({
                   </TableColumn>
                 ))}
                 <TableColumn label="操作栏">
-                  <Button type="text" onClick={handler.onDelete}>
-                    删除
-                  </Button>
+                  {{
+                    default: ({ $index }: any) => (
+                      <Button
+                        type="danger"
+                        onClick={() => handler.onDelete($index)}
+                      >
+                        删除
+                      </Button>
+                    ),
+                  }}
                 </TableColumn>
               </Table>
             </div>

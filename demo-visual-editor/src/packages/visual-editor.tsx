@@ -33,6 +33,7 @@ export const VisualEditor = defineComponent({
       require: true,
     },
     formData: { type: Object as PropType<Record<string, any>>, required: true },
+    customProps: { type: Object as PropType<Record<string, any>> },
   },
   emits: {
     "update:modelValue": (val?: VisualEditorModelValue) => true,
@@ -543,6 +544,7 @@ export const VisualEditor = defineComponent({
                 config={props.config}
                 formData={props.formData}
                 slots={ctx.slots}
+                customProps={props.customProps}
                 {...{
                   onMousedown: (e: MouseEvent) =>
                     focusHandler.block.onMousedown(e, block, index),
@@ -608,6 +610,7 @@ export const VisualEditor = defineComponent({
                         config={props.config}
                         formData={props.formData}
                         slots={ctx.slots}
+                        customProps={props.customProps}
                         {...{
                           onMousedown: (e: MouseEvent) =>
                             focusHandler.block.onMousedown(e, block, index),

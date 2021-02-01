@@ -4,9 +4,15 @@
       v-model="jsonData"
       :config="visualConfig"
       :formData="formData"
-    />
+      :customProps="customProps"
+    >
+      <template #subBtn>
+        <el-button type="">自定义按钮</el-button>
+        <el-tag type="">自定义标签</el-tag>
+      </template>
+    </visual-editor>
     <div style="text-align: center">
-      {{ JSON.stringify(formData) }}
+      <!-- {{ JSON.stringify(formData) }} -->
     </div>
   </div>
 </template>
@@ -26,6 +32,18 @@ export default defineComponent({
       jsonData: jsonData,
       formData: {
         username: "admin",
+      },
+      customProps: {
+        subBtn: {
+          onClick: () => {
+            this.$notify({ message: "执行表单数据校验及提交服务器的动作" });
+          },
+        },
+        mySelect: {
+          onChange: (val: string) => {
+            this.$notify({ message: `食物发生变化: ${val}` });
+          },
+        },
       },
     };
   },

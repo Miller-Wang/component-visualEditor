@@ -35,8 +35,9 @@ visualConfig.registry("text", {
 visualConfig.registry("button", {
   label: "按钮",
   preview: () => <ElButton>按钮</ElButton>,
-  render: ({ props, size }) => (
+  render: ({ props, size, custom }) => (
     <ElButton
+      {...custom}
       type={props.type}
       size={props.size}
       style={{ width: `${size.width}px`, height: `${size.height}px` }}
@@ -67,7 +68,7 @@ visualConfig.registry("button", {
 visualConfig.registry("input", {
   label: "输入框",
   preview: () => <ElInput />,
-  render: ({ model, size }) => {
+  render: ({ model, size, custom }) => {
     return <ElInput {...model.default} style={{ width: `${size.width}px` }} />;
   },
   resize: { width: true },
@@ -87,8 +88,8 @@ visualConfig.registry("input", {
 visualConfig.registry("select", {
   label: "下拉框",
   preview: () => <ElSelect></ElSelect>,
-  render: ({ props }) => (
-    <ElSelect key={Math.random()}>
+  render: ({ props, model, custom }) => (
+    <ElSelect key={Math.random()} {...custom}>
       {(props.options || []).map(
         (
           opt: {
@@ -132,6 +133,29 @@ visualConfig.registry("number-range", {
   model: {
     start: "起始绑定字段",
     end: "结束绑定字段",
+  },
+});
+
+visualConfig.registry("image", {
+  label: "图片",
+  resize: { width: true, height: true },
+  preview: () => (
+    <div style="text-align:center">
+      <div style="font-size:20px;background-color:#f2f2f2;color:#ccc;display:inline-flex;width:100%;">
+        <i class="el-icon-picture"></i>
+      </div>
+    </div>
+  ),
+  render: ({ props, size }) => (
+    <div
+      style={{ height: `${size.height}px`, width: `${size.width}px` }}
+      class="visual-block-image"
+    >
+      <img src={props.url || "https://cn.vuejs.org/images/logo.png"} />
+    </div>
+  ),
+  props: {
+    url: createEditorInputProps("地址"),
   },
 });
 
