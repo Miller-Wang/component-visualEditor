@@ -392,7 +392,7 @@ export const VisualEditor = defineComponent({
       return {
         container: {
           onMousedown: (e: MouseEvent) => {
-            state.editing && e.preventDefault();
+            !state.preview && e.preventDefault();
             if (e.currentTarget !== e.target) {
               return;
             }
