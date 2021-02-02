@@ -387,7 +387,7 @@ export const VisualEditor = defineComponent({
       return {
         container: {
           onMousedown: (e: MouseEvent) => {
-            e.preventDefault();
+            // e.preventDefault();
             if (e.currentTarget !== e.target) {
               return;
             }
@@ -532,9 +532,7 @@ export const VisualEditor = defineComponent({
         <>
           <div
             class="visual-editor-container"
-            ref={containerRef}
             style={containerStyles.value}
-            {...focusHandler.container}
             v-show={!state.editing}
           >
             {(dataModel.value?.blocks || []).map((block, index: number) => (
@@ -545,12 +543,6 @@ export const VisualEditor = defineComponent({
                 formData={props.formData}
                 slots={ctx.slots}
                 customProps={props.customProps}
-                {...{
-                  onMousedown: (e: MouseEvent) =>
-                    focusHandler.block.onMousedown(e, block, index),
-                  onContextmenu: (e: MouseEvent) =>
-                    handler.onContextmenuBlock(e, block),
-                }}
               />
             ))}
             <div class="container-edit-button" onClick={methods.openEdit}>

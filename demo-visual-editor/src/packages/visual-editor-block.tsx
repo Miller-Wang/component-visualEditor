@@ -72,9 +72,9 @@ export const VisualEditorBlock = defineComponent({
             prev[propName] = {
               [propName === "default" ? "modelValue" : propName]: props
                 .formData[modelName],
-              [modelName === "default" ? "onUpdate:modelValue" : "onChange"]: (
+              [propName === "default" ? "onUpdate:modelValue" : "onChange"]: (
                 val: any
-              ) => modelName && (formData[modelName] = val),
+              ) => (formData[modelName] = val),
             };
             return prev;
           }, {} as Record<string, any>),

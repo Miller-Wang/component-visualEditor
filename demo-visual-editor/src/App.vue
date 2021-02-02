@@ -11,8 +11,8 @@
         <el-tag type="">自定义标签</el-tag>
       </template>
     </visual-editor>
-    <div style="text-align: center">
-      <!-- {{ JSON.stringify(formData) }} -->
+    <div class="show-text">
+      {{ JSON.stringify(formData) }}
     </div>
   </div>
 </template>
@@ -56,6 +56,10 @@ body {
   margin: 0;
   padding: 0;
 }
-.app {
+.show-text {
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  bottom: 200px;
 }
 </style>

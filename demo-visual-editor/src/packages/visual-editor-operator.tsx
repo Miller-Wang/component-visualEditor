@@ -176,7 +176,9 @@ export const VisualOperatorEditor = defineComponent({
           <ElForm>
             {content.map((el) => el)}
             <ElFormItem>
-              <ElButton {...({ onClick: methods.apply } as any)}>应用</ElButton>
+              <ElButton type="primary" {...({ onClick: methods.apply } as any)}>
+                应用
+              </ElButton>
               <ElButton {...({ onClick: methods.reset } as any)}>重置</ElButton>
             </ElFormItem>
           </ElForm>

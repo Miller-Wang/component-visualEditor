@@ -1,11 +1,11 @@
 import { useModel } from "@/packages/utils/useModel";
 import { VisualEditorProps } from "@/packages/visual-editor.props";
 import { defineComponent, PropType } from "vue";
-import { ElButton, ElTag } from "element-plus";
+import { ElButton, ElTag as Tag } from "element-plus";
 import "./style.scss";
 import { $$tablePropEditor } from "./service";
 
-const Button = ElButton as any;
+const [Button, ElTag]: any[] = [ElButton, Tag];
 
 export const TablePropEditor = defineComponent({
   props: {
@@ -28,6 +28,7 @@ export const TablePropEditor = defineComponent({
       });
       console.log(data);
       model.value = data;
+      // 可以直接应用
     };
 
     return () => (
@@ -38,7 +39,9 @@ export const TablePropEditor = defineComponent({
           </Button>
         )}
         {(model.value || []).map((item) => (
-          <ElTag>{item[props.propConfig.table?.showKey || ""]}</ElTag>
+          <ElTag onClick={onClick}>
+            {item[props.propConfig.table?.showKey || ""]}
+          </ElTag>
         ))}
       </div>
     );

@@ -67,7 +67,7 @@ visualConfig.registry("button", {
 
 visualConfig.registry("input", {
   label: "输入框",
-  preview: () => <ElInput />,
+  preview: () => <ElInput modelValue={""} />,
   render: ({ model, size, custom }) => {
     return <ElInput {...model.default} style={{ width: `${size.width}px` }} />;
   },
@@ -89,7 +89,7 @@ visualConfig.registry("select", {
   label: "下拉框",
   preview: () => <ElSelect></ElSelect>,
   render: ({ props, model, custom }) => (
-    <ElSelect key={Math.random()} {...custom}>
+    <ElSelect key={Math.random()} {...custom} {...model.default}>
       {(props.options || []).map(
         (
           opt: {
@@ -112,6 +112,9 @@ visualConfig.registry("select", {
       ],
       showKey: "label",
     }),
+  },
+  model: {
+    default: "绑定字段",
   },
 });
 
