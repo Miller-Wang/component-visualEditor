@@ -33,6 +33,7 @@ export const VisualEditor = defineComponent({
       require: true,
     },
     formData: { type: Object as PropType<Record<string, any>>, required: true },
+    // 自定义事件
     customProps: { type: Object as PropType<Record<string, any>> },
   },
   emits: {

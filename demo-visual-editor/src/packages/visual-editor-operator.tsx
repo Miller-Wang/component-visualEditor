@@ -135,6 +135,11 @@ export const VisualOperatorEditor = defineComponent({
         const component = props.config?.componentMap[componentKey];
 
         if (component) {
+          content.push(
+            <ElFormItem label="组件标识">
+              <ElInput v-model={state.editData.slotName} />
+            </ElFormItem>
+          );
           if (component.props) {
             content.push(
               <>

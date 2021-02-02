@@ -6,9 +6,10 @@
       :formData="formData"
       :customProps="customProps"
     >
-      <template #subBtn>
-        <el-button type="">自定义按钮</el-button>
-        <el-tag type="">自定义标签</el-tag>
+      <template #subBtn v-if="formData.food">
+        <!-- 通过组件标识来自定义组件内容 -->
+        <el-button v-if="formData.food === 'dangao'">显示蛋糕</el-button>
+        <el-tag v-else>其他食物</el-tag>
       </template>
     </visual-editor>
     <div class="show-text">
@@ -34,6 +35,7 @@ export default defineComponent({
         username: "admin",
       },
       customProps: {
+        // subBtn是组件标识
         subBtn: {
           onClick: () => {
             this.$notify({ message: "执行表单数据校验及提交服务器的动作" });

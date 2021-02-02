@@ -81,7 +81,7 @@ export const VisualEditorBlock = defineComponent({
           custom:
             !props.block?.slotName || !props.customProps
               ? {}
-              : props.customProps[props.block?.slotName],
+              : props.customProps[props.block?.slotName] || {},
         });
       }
 

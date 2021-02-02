@@ -69,7 +69,13 @@ visualConfig.registry("input", {
   label: "输入框",
   preview: () => <ElInput modelValue={""} />,
   render: ({ model, size, custom }) => {
-    return <ElInput {...model.default} style={{ width: `${size.width}px` }} />;
+    return (
+      <ElInput
+        {...custom}
+        {...model.default}
+        style={{ width: `${size.width}px` }}
+      />
+    );
   },
   resize: { width: true },
   model: {
