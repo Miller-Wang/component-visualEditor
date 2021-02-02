@@ -40,7 +40,10 @@ visualConfig.registry("button", {
       {...custom}
       type={props.type}
       size={props.size}
-      style={{ width: `${size.width}px`, height: `${size.height}px` }}
+      style={{
+        width: size.width ? `${size.width}px` : undefined,
+        height: size.height ? `${size.height}px` : undefined,
+      }}
     >
       {props.text || "按钮"}
     </ElButton>
@@ -73,7 +76,7 @@ visualConfig.registry("input", {
       <ElInput
         {...custom}
         {...model.default}
-        style={{ width: `${size.width}px` }}
+        style={{ width: size.width ? `${size.width}px` : undefined }}
       />
     );
   },
@@ -130,7 +133,7 @@ visualConfig.registry("number-range", {
   preview: () => <NumberRange />,
   render: ({ model, size }) => (
     <NumberRange
-      style={{ width: `${size.width}px` }}
+      style={{ width: size.width ? `${size.width}px` : undefined }}
       {...{
         start: model.start.value,
         "onUpdate:start": model.start.onChange,
@@ -158,7 +161,10 @@ visualConfig.registry("image", {
   ),
   render: ({ props, size }) => (
     <div
-      style={{ height: `${size.height}px`, width: `${size.width}px` }}
+      style={{
+        height: size.height ? `${size.height}px` : undefined,
+        width: size.width ? `${size.width}px` : undefined,
+      }}
       class="visual-block-image"
     >
       <img src={props.url || "https://cn.vuejs.org/images/logo.png"} />

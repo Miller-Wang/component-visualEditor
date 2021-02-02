@@ -109,8 +109,6 @@ export function useCommander() {
     // );
   };
 
-  // const destory = () => {};
-
   registry({
     name: "undo",
     keyboard: "ctrl+z",

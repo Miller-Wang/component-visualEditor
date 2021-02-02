@@ -2,6 +2,7 @@ import {
   VisualEditorBlockData,
   VisualEditorComponent,
   VisualEditorConfig,
+  VisualDragProvider,
 } from "@/packages/visual-editor.utils";
 import { defineComponent, PropType } from "vue";
 import "./style.scss";
@@ -20,8 +21,13 @@ export const BlockResizer = defineComponent({
       required: true,
     },
   },
+  emits: {
+    dragStart: () => true,
+    dragEnd: () => true,
+  },
   setup(props) {
     const { width, height } = props.component.resize || {};
+    const { dragstart, dragend } = VisualDragProvider.inject();
 
     const onMousedown = (() => {
       let data = {
@@ -32,6 +38,7 @@ export const BlockResizer = defineComponent({
         startLeft: 0,
         startTop: 0,
         direction: {} as { horizontal: Direction; vertical: Direction },
+        dragging: false,
       };
 
       const mousemove = (e: MouseEvent) => {
@@ -43,7 +50,13 @@ export const BlockResizer = defineComponent({
           direction,
           startLeft,
           startTop,
+          dragging,
         } = data;
+        if (!dragging) {
+          data.dragging = true;
+          dragstart.emit();
+        }
+
         let { clientX: moveX, clientY: moveY } = e;
         if (direction.horizontal === Direction.center) {
           moveX = startX;
@@ -77,7 +90,11 @@ export const BlockResizer = defineComponent({
         console.log(e);
         document.body.removeEventListener("mousemove", mousemove);
         document.body.removeEventListener("mouseup", mouseup);
+        if (data.dragging) {
+          dragend.emit();
+        }
       };
+
       const mousedown = (
         e: MouseEvent,
         direction: { horizontal: Direction; vertical: Direction }
@@ -93,6 +110,7 @@ export const BlockResizer = defineComponent({
           startHeight: props.block.height,
           startLeft: props.block.left,
           startTop: props.block.top,
+          dragging: false,
         };
       };
 

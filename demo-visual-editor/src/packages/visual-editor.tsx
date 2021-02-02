@@ -13,6 +13,8 @@ import {
   VisualEditorConfig,
   VisualEditorModelValue,
   VisualEditorMarkLine,
+  VisualDragEvent,
+  VisualDragProvider,
 } from "./visual-editor.utils";
 import {
   $$dropdown,
@@ -86,6 +88,8 @@ export const VisualEditor = defineComponent({
 
     const dragstart = createEvent();
     const dragend = createEvent();
+
+    VisualDragProvider.provide({ dragstart, dragend });
 
     // 对外暴露的一些方法
     const methods = {
@@ -388,7 +392,7 @@ export const VisualEditor = defineComponent({
       return {
         container: {
           onMousedown: (e: MouseEvent) => {
-            // e.preventDefault();
+            state.editing && e.preventDefault();
             if (e.currentTarget !== e.target) {
               return;
             }

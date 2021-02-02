@@ -1,5 +1,5 @@
 import { VisualEditorProps } from "./visual-editor.props";
-
+import { provide, inject } from "vue";
 export interface VisualEditorBlockData {
   top: number;
   left: number;
@@ -98,3 +98,28 @@ export interface VisualEditorMarkLine {
   x: { left: number; showLeft: number }[];
   y: { top: number; showTop: number }[];
 }
+
+export interface VisualDragEvent {
+  dragstart: {
+    on: (cb: () => void) => void;
+    off: (cb: () => void) => void;
+    emit: () => void;
+  };
+  dragend: {
+    on: (cb: () => void) => void;
+    off: (cb: () => void) => void;
+    emit: () => void;
+  };
+}
+
+export const VisualDragProvider = (() => {
+  const VISUAL_DRAG_PROVIDER = "@@VISUAL_DRAG_PROVIDER";
+  return {
+    provide: (data: VisualDragEvent) => {
+      provide(VISUAL_DRAG_PROVIDER, data);
+    },
+    inject: () => {
+      return inject(VISUAL_DRAG_PROVIDER) as VisualDragEvent;
+    },
+  };
+})();
